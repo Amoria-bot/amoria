@@ -1,0 +1,66 @@
+/* Button.css */
+@import '../../../styles/variables.css'; /* Импортируем переменные */
+
+/* Первый (основной) вариант кнопки */
+.button {
+  all: unset;
+  width: 100%; /* Кнопка занимает всю доступную ширину контейнера */
+  height: 42px; /* Унифицированная высота */
+  padding: 12px 0; /* Отступы */
+  background-color: var(--primary-color); /* Заливка фоном */
+  border: none;
+  border-radius: var(--border-radius-large); /* Закругленные углы */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: var(--primary-hover); /* Фон при наведении */
+}
+
+/* Второй вариант кнопки (прозрачный с границей) */
+.button.secondary {
+  background-color: transparent; /* Прозрачный фон */
+  border: 1px solid var(--primary-color); /* Граница */
+  border-radius: 32px; /* Закругленные углы */
+  width: 100%;
+  height: 42px;
+}
+
+.button.secondary span {
+  color: var(--primary-color); /* Цвет текста для второго варианта */
+}
+
+/* Иконка внутри кнопки */
+.button-icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+}
+
+/* Стиль текста */
+button span {
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: var(--font-size-medium);
+  color: var(--text-color); /* Основной цвет текста */
+  text-align: center;
+}
+
+.button:active {
+  background-color: #ECE6FA; /* Новый цвет фона при нажатии */
+  color: #A084E8; /* Новый цвет текста при нажатии */
+}
+
+/* Уточняем цвет текста внутри кнопки при активном состоянии */
+.button:active span {
+  color: #A084E8;
+}
+
+/* Переход для плавного изменения цвета */
+.button {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

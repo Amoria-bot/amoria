@@ -1,0 +1,76 @@
+.friends p {
+    text-align: left;
+  }
+  
+  .friends h3 {
+    text-align: center;
+    margin-top: var(--spacing-large);
+    margin-bottom: var(--spacing-large);
+  }
+  
+  .button-container {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+
+  .copy-button {
+    width: 64px; /* Устанавливаем ширину */
+    aspect-ratio: 1 / 1; /* Пропорция 1:1, чтобы сделать кнопку квадратной */
+    border-radius: 16px;
+    border: 1px solid #A084E8;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  
+  .copy-icon {
+    fill: #A084E8; /* Фиолетовый цвет */
+  }
+  
+  .copy-button span {
+    color: #A084E8;
+    font-size: 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 600;
+    text-align: center;
+  }
+  
+  .friends input {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding: 16px;
+    width: 100%;
+    border: 1px solid #A084E8;
+    border-radius: 8px;
+    outline: none;
+    font-size: 16px;
+  }
+  
+  .friends ul {
+    list-style: none; /* Убираем стандартные буллеты */
+    padding: 0;
+    margin-top: 16px;
+  }
+  
+  .friends li {
+    background-color: #2C2C2E; /* Тёмный фон для элемента списка */
+    border: 1px solid #A084E8; /* Фиолетовая рамка */
+    border-radius: 12px; /* Скруглённые углы */
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #FFFFFF; /* Белый цвет текста */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.3s;
+  }
+  

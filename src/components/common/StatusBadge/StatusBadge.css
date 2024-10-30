@@ -1,0 +1,35 @@
+/* Компонент статуса без абсолютного позиционирования */
+.character-status {
+    background: rgba(63, 63, 63, 0.1);
+    border-radius: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 1.5rem;
+}
+
+/* Индикатор статуса */
+.status-indicator {
+    width: 0.625rem;
+    height: 0.625rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* Текст статуса */
+.status-text {
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1rem;
+    margin: 0;
+}
+
+/* Цвета для онлайн и офлайн статусов */
+.online {
+    background-color: #3BCB86;
+}
+
+.offline {
+    background-color: #939393;
+}

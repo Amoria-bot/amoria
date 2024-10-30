@@ -1,0 +1,22 @@
+  .thank-you h1 {
+    text-align: center;
+    background: linear-gradient(90deg, #e8a084 0%, #faece6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+  }
+
+  .thank-you h2 {
+    text-align: center;
+    background: linear-gradient(90deg, #e8a084 0%, #faece6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+  }
+
+  .thank-you h3 {
+    text-align: center;
+  }
+  
+  .star-animation {
+    font-size: 50px; /* Размер анимации */
+  }
+  

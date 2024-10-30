@@ -1,0 +1,323 @@
+/* src/styles/CharacterProfile.css */
+.character-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Выравнивание элементов по левому краю */
+}
+
+.character-profile .back-button {
+  all: unset;
+  height: 32px;
+  cursor: pointer;
+  z-index: 1; /* Убедимся, что кнопка выше других элементов */
+  margin-bottom: var(--spacing-medium);
+}
+
+.character-profile h2 {
+  background: linear-gradient(90deg, #e8a084 0%, #faece6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+  color: white;
+}
+
+.character-profile p {
+  margin-bottom: 1rem; /* Отступ 1rem (16px) */
+  text-align: left;
+}
+
+.character-profile .status-text {
+  margin-bottom: 0; /* Убираем отступ для status-text */
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Три изображения в ряд */
+  gap: 0.625rem; /* 10px */
+  width: 100%; /* Чтобы галерея занимала всю доступную ширину */
+}
+
+.gallery-image {
+  width: 100%; /* Заполняет ячейку */
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.3125rem; /* 5px */
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+/* Отступы сверху и снизу для кнопок */
+.character-profile button {
+  margin-top: 2rem;   /* 32px */
+  margin-bottom: 2rem; /* 32px */
+}
+
+
+.like-dislike-container {
+  width: 100%;
+  height: 3.25rem; /* 52px */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem; /* 24px */
+  margin-bottom: 1.5rem; /* 24px отступ снизу */
+}
+
+.like-button-container,
+.dislike-button-container {
+  padding: 0.5rem; /* 8px */
+  background: white;
+  border-radius: 2rem; /* 32px */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.like-button-container img,
+.dislike-button-container img {
+  width: 2.25rem; /* 36px */
+  height: 2.25rem; /* 36px */
+}
+
+.like-button-container span,
+.dislike-button-container span {
+  color: black;
+  font-size: 1rem; /* 16px */
+  font-weight: bold;
+  margin-left: 0.5rem; /* 8px */
+  margin-right: 0.5rem; /* 8px */
+}
+
+.like-dislike-buttons {
+  display: flex;
+  gap: 0.625rem; /* 10px */
+  margin: 0.625rem 0; /* 10px 0 */
+}
+
+.like-button,
+.dislike-button {
+  border: none;
+  background-color: #f0f0f0;
+  padding: 0.625rem 0.9375rem; /* 10px 15px */
+  cursor: pointer;
+  border-radius: 0.3125rem; /* 5px */
+  transition: background-color 0.3s;
+}
+
+.like-button:hover {
+  background-color: #d4edda;
+}
+
+.dislike-button:hover {
+  background-color: #f8d7da;
+}
+
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.vote-message {
+  text-align: center;
+  width: 100%; /* На всю ширину родителя */
+  margin-bottom: 1rem; /* Отступ сверху */
+  font-size: 1rem; /* Размер шрифта */
+  color: #939393; /* Цвет текста */
+  font-weight: 400; /* Нормальный вес шрифта */
+  line-height: 1.5rem; /* Межстрочный интервал */
+}
+
+.character-profile form {
+  width: 100%; /* Занимает всю ширину родителя */
+  display: flex; /* Flexbox для выравнивания */
+  flex-direction: column; /* Столбец, чтобы кнопка шла под textarea */
+  gap: 0.75rem; /* 12px */
+}
+
+form .submit-button {
+  margin-top: 0.5rem !important; /* Верхний отступ 0.5rem (8px) */
+  margin-bottom: 0; /* Убираем нижний отступ */
+}
+
+.comment-input-container {
+  width: 100%; /* Растягиваем на всю ширину */
+  height: 7.9375rem; /* 127px */
+  padding: 0.75rem 0.625rem; /* 12px 10px */
+  background: #303030;
+  border-radius: 0.5rem; /* 8px */
+  border: 1px solid #3F3F3F;
+  display: inline-flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: 0.5rem; /* 8px */
+  box-sizing: border-box; /* Учитываем padding и border */
+}
+
+.comment-input {
+  width: 100%; /* Растягиваем поле ввода на всю ширину контейнера */
+  height: 100%; /* Заполняет всю высоту контейнера */
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #939393;
+  font-size: 0.875rem; /* 14px */
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 400;
+  line-height: 1.4rem; /* 22.4px */
+  resize: none; /* Отключаем изменение размера */
+}
+
+.comments {
+  width: 100%;
+  margin-top: 2rem; /* Верхний отступ */
+  padding: 0; /* Убираем стандартные отступы списка */
+  list-style-type: none; /* Убираем маркеры списка */
+}
+
+.comment-container {
+  padding: 1rem; /* Внутренний отступ */
+  background: #303030;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Отступ между элементами внутри */
+  margin-bottom: 1rem; /* Отступ между комментариями */
+  box-sizing: border-box; /* Учитываем padding в размерах */
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.comment-username {
+  color: white;
+  font-size: 1rem; /* 16px */
+  font-weight: 600;
+  line-height: 1.5rem;
+  text-align: left;
+}
+
+.comment-body {
+  color: #BDBDBD;
+  font-size: 0.875rem; /* 14px */
+  font-weight: 400;
+  line-height: 1.5rem;
+  word-wrap: break-word;
+  text-align: left; /* Выравнивание по левому краю */
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9); /* Более тёмный фон */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px); /* Эффект размытия фона */
+}
+
+.popup-content {
+  position: relative; /* Обеспечивает правильное позиционирование дочерних элементов */
+  display: block; /* Убираем flex, если был */
+  padding: 1rem; /* Внутренний отступ */
+}
+
+.popup-content img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  margin: auto;
+  border-radius: 0.625rem; /* 10px */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.prev-button,
+.next-button {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.4); /* Прозрачный фон */
+  border-radius: 100%; /* Круглая форма */
+  overflow: hidden;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.prev-button,
+.next-button {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.1); /* Прозрачный фон */
+  border-radius: 50%; /* Круглая форма */
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%; /* Центрирование по вертикали */
+  transform: translateY(-50%);
+  cursor: pointer;
+  border: none;
+  transition: background 0.3s;
+  z-index: 10; /* Убедимся, что стрелки поверх изображения */
+  margin: 1rem;
+}
+
+.prev-button {
+  left: 15px; /* Отступ от левого края */
+}
+
+.next-button {
+  right: 15px; /* Отступ от правого края */
+}
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem; /* Крестик в правом верхнем углу */
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.3s;
+  margin: 0 !important; /* Полный сброс отступов */
+  padding: 0 !important; /* Полный сброс padding */
+  box-sizing: content-box; /* Исключаем влияние box-sizing */
+  line-height: 1; /* Сброс line-height, если он наследуется */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 9.375rem; /* 150px = 9.375rem (при базовом размере шрифта 16px) */
+}
+
+.popup .swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.popup .swiper-slide img {
+  width: 100%;
+  height: auto;
+  border-radius: 1rem; /* 16px */
+  object-fit: contain; /* Вписываем изображение в контейнер */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5); /* Тень для изображений */
+}
+
+.error-message {
+  color: #CB5252;
+  font-size: 0.875rem;
+}

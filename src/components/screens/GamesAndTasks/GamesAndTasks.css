@@ -1,0 +1,74 @@
+.game-card {
+  background-color: #303030;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 12px;
+}
+
+.game-card h2 {
+  text-align: center;
+  background: linear-gradient(90deg, #e8a084 0%, #faece6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.wheel-icon {
+  margin-bottom: 20px; /* Нижний отступ */
+  max-width: 100%; /* Ограничиваем размер изображения */
+  height: auto;
+}
+
+.game-card button {
+  background: linear-gradient(118deg, #E8A084 0%, #FAECE6 100%);
+  color: #4D352C;
+  font-weight: 700;
+}
+
+.social-task {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #303030;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 12px;
+}
+
+.task-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  margin-right: 16px;
+}
+
+.social-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0; /* Иконка не сжимается */
+  margin: 0; /* Убедимся, что у иконок нет отступов */
+  padding: 0; /* Избегаем влияния внутренних отступов */
+}
+
+.task-text {
+  display: flex;
+  flex-direction: column; /* Располагаем элементы по вертикали */
+}
+
+.reward-text {
+  font-size: 14px;
+  color: #A084E8;
+}
+
+.social-task button {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.social-task button:disabled {
+  background: #B0B0B0; /* Серый цвет для неактивной кнопки */
+  color: #FFFFFF;
+  cursor: not-allowed; /* Указываем, что кнопка недоступна */
+  transform: none; /* Убираем эффект наведения */
+}
+

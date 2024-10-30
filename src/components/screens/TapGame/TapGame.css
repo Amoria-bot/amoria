@@ -1,0 +1,108 @@
+.tap-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Градиентный текст заголовка */
+.tap-game h2 {
+  text-align: center;
+  background: linear-gradient(90deg, #e8a084 0%, #faece6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.tap-game h3, h4 {
+  text-align: center;
+}
+
+.tap-area {
+  margin: 20px 0;
+  cursor: pointer;
+  position: relative;
+}
+
+/* Полоса прогресса с закруглёнными краями */
+.progress-bar {
+  width: 80%;
+  height: 10px;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+/* Анимация заполнения прогресса */
+.progress {
+  height: 100%;
+  background-color: #4caf50;
+  transition: width 0.3s;
+}
+
+/* Анимация уменьшения/увеличения изображения при нажатии */
+.tap-area img {
+  transition: transform 0.1s ease-in-out;
+}
+
+/* Таймер перерыва с мягким шрифтом */
+.cooldown-timer {
+  margin-top: 10px;
+  font-size: 18px;
+  color: #555;
+}
+
+/* Canvas для отрисовки изображения */
+.tap-canvas {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  margin: 20px 0;
+}
+
+/* Плавающий текст "+1" с анимацией */
+.floating-plus-one {
+  position: absolute;
+  font-size: 32px;
+  color: #333;
+  font-weight: bold;
+  animation: floatUp 1.5s ease-in-out forwards;
+  pointer-events: none; /* Элемент не перехватывает клики */
+}
+
+/* Анимация подъёма и затухания текста "+1" */
+@keyframes floatUp {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+}
+
+.canvas-container {
+  width: 100%; /* Занимает всю ширину родителя */
+  max-width: 400px; /* Ограничиваем максимальный размер */
+  position: relative; /* Для позиционирования элементов внутри */
+}
+
+.tap-canvas {
+  width: 100%; /* Canvas занимает всю ширину контейнера */
+  height: auto; /* Высота рассчитывается автоматически */
+  aspect-ratio: 1 / 1; /* Квадратное соотношение сторон */
+  display: block;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.tap-game .back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}

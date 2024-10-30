@@ -1,0 +1,46 @@
+/* RewardScreen.css */
+.reward-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .reward-image {
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .reward-screen h1 {
+    text-align: center;
+    background: linear-gradient(90deg, #CFC1F3 0%, #E8A084 100%);
+    -webkit-background-clip: text;  /* Для поддержки градиента на тексте */
+    -webkit-text-fill-color: transparent;
+    font-size: var(--font-size-extra-large); /* Используем переменную */
+    font-weight: 700;
+    word-wrap: break-word;
+  }
+  
+  .reward-info {
+    margin: 20px 0;
+    color: white;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .reward-info p {
+    font-size: var(--font-size-large);
+  }
+
+  .continue-button {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1rem;
+    position: fixed;
+    bottom: 20px;
+    left: 0;
+    padding: 10px 20px;
+    box-sizing: border-box;
+  }
+
+  

@@ -1,0 +1,105 @@
+/* Основной контейнер для списка персонажей */
+.character-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    background-color: #110d10;
+}
+
+/* Заголовок списка */
+.character-list-title {
+    width: 100%;
+    color: white;
+    text-align: left;
+}
+
+/* Стили для ul */
+.character-list ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/* Каждый элемент списка */
+.character-item {
+    margin-bottom: 1rem; /* Отступ только между рядами */
+    width: calc(50% - 0.5rem);
+}
+
+/* Ссылка */
+.character-link {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* Обертка изображения */
+.character-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+/* Изображение */
+.character-image {
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 3 / 4;
+    border-radius: 0.5rem;
+}
+
+/* Градиент */
+.character-gradient {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 1) 100%);
+    pointer-events: none;
+}
+
+/* Информация о персонаже */
+.character-info {
+    position: absolute;
+    bottom: 0;
+    left: 0.625rem; /* 10px */
+    right: 0.625rem; /* 10px */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    color: #ece6fa;
+}
+
+/* Имя персонажа */
+.character-info-name {
+    font-size: var(--font-size-large);
+    font-weight: 600;
+}
+
+/* Описание */
+.character-description {
+    font-size: 0.625rem;
+    color: white;
+    text-align: left;
+}
+
+/* Обертка для статуса на экране выбора персонажа */
+.character-status-wrapper {
+    position: absolute;
+    padding: 0.25rem 0.5rem; /* 4px 8px */
+}
+
+.premium-badge {
+    position: absolute;
+    top: 0.625rem; /* Отступ сверху */
+    right: 0.625rem; /* Отступ справа */
+    width: 1.5rem; /* Ширина бейджа */
+    height: 1.5rem; /* Высота бейджа */
+    z-index: 1; /* Бейдж должен быть поверх изображения */
+}

@@ -1,0 +1,134 @@
+/* global.css */
+@import './variables.css';
+
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Глобальные стили для html и body */
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+  margin: 2.75rem 1.5rem 2.125rem;
+  font-family: var(--font-main);
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  flex-direction: column; /* Весь контент в столбик */
+  align-items: center; /* По горизонтали по центру */
+  text-align: center; /* Глобальное выравнивание текста по центру */
+}
+
+.no-margin {
+    margin: 0 !important; /* Полностью убираем отступы */
+  }
+
+/* Стили для заголовков */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-main); /* Основной шрифт */
+    font-weight: 700;
+    color: var(--text-color);
+    margin-bottom: var(--spacing-medium); /* Используем переменную отступа */
+    text-align: left; /* Все заголовки по левому краю */
+}
+
+h2 {
+    font-size: var(--font-size-large); /* Размер шрифта 18px */
+}
+
+h3 {
+    font-size: var(--font-size-medium); /* Размер шрифта 14px */
+}
+
+/* Стили для параграфов и текста */
+p {
+    font-family: var(--font-main); /* Основной шрифт */
+    font-weight: 400;
+    margin-bottom: var(--spacing-large); /* Отступ */
+}
+
+/* Стили для ссылок */
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Утилиты */
+.text-center {
+    text-align: center;
+}
+
+.mt-1 {
+    margin-top: var(--spacing-small);
+}
+
+.mb-1 {
+    margin-bottom: var(--spacing-small);
+}
+
+/* Глобальные стили для кнопок */
+button {
+    all: unset; /* Сброс стандартных стилей */
+    width: var(--button-width);
+    height: var(--button-height);
+    padding: var(--spacing-small) 0;
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius-large); /* Скругление углов */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Текст внутри кнопки */
+button span {
+    color: var(--text-color);
+    font-family: var(--font-main);
+    font-weight: 600;
+    font-size: var(--font-size-medium);
+    text-align: center;
+    word-wrap: break-word;
+}
+
+/* Иконка внутри кнопки */
+button .button-icon {
+    width: var(--icon-size);
+    height: var(--icon-size);
+    position: relative;
+}
+
+button .button-icon::before, 
+button .button-icon::after {
+    content: "";
+    position: absolute;
+    background-color: var(--text-color);
+    border-radius: 1.5px;
+}
+
+button .button-icon::before {
+    width: 9px;
+    height: 1.5px;
+    top: 50%;
+    left: calc(var(--icon-size) / 4);
+    transform: translateY(-50%);
+}
+
+button .button-icon::after {
+    width: 1.5px;
+    height: 9px;
+    top: calc(var(--icon-size) / 4);
+    left: 50%;
+    transform: translateX(-50%);
+}

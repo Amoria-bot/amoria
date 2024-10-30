@@ -1,0 +1,18 @@
+/* src/styles/App.css */
+
+
+.App {
+    position: relative; /* Устанавливаем относительное позиционирование */
+    width: 100%; /* Занимаем всю ширину родителя */
+    flex-direction: column; /* Вертикальное расположение элементов */
+    align-items: center; /* Выравнивание по центру */
+    justify-content: space-between; /* Пространство между элементами */
+    background-color: var(--background-color); /* Фоновый цвет */
+    box-sizing: border-box; /* Учитываем padding в размерах */
+    padding-bottom: 120px; /* Добавляем отступ для кнопок внизу */
+  }
+  
+  .App.no-padding {
+    padding-bottom: 0; /* Для экранов без меню */
+  }
+  

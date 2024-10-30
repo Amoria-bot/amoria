@@ -1,0 +1,52 @@
+/* Контейнер нижнего меню */
+.bottom-navbar {
+    width: 100%;
+    min-height: 48px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #110D10;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding-top: 0.75rem;
+    padding-bottom: 2.125rem; /* Отступ снизу */
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+/* Элемент меню */
+.navbar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 75px;
+    height: 48px;
+    color: #939393;
+    font-size: 12px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+/* Активное состояние элемента */
+.navbar-item.active {
+    color: #DFD6F7; /* Цвет текста при активном состоянии */
+}
+
+/* Убираем подчеркивание ссылок */
+.navbar-item:active, 
+.navbar-item:focus, 
+.navbar-item:hover {
+    text-decoration: none;
+}
+
+/* Иконка */
+.navbar-icon img {
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s ease;
+}
+

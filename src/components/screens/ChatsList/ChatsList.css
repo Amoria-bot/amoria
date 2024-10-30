@@ -1,0 +1,151 @@
+/* src/components/screens/Chat/ChatsList.css */
+
+
+.chat-list-container h2 {
+  width: 100%;
+  color: white;
+  text-align: left;
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: var(--font-size-large);
+  margin-bottom: var(--spacing-medium);
+}
+
+.chat-item {
+  width: 335px;
+  height: 46px;
+  background: #110d10;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 48px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.chat-avatar-wrapper {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 1px solid #a084e8;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.chat-avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  padding: 3px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.status-indicator .chat-status-indicator {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 1px solid #110d10;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+}
+
+/* Новый стиль для индикатора статуса на экране чатов */
+.chat-status-indicator {
+  width: 12px; /* Уменьшенный размер */
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid #fff; /* Белая обводка */
+  position: absolute;
+  bottom: 5px; /* Сдвинуть вверх */
+  right: 5px; /* Сдвинуть влево */
+}
+
+.chat-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start; /* Выровнять все элементы по левому краю */
+  gap: 4px;
+  flex-grow: 1;
+}
+
+.chat-header .chat-premium-badge {
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
+  display: inline-block;
+  vertical-align: middle;
+  position: static; /* Убедитесь, что позиционирование не наследуется */
+}
+
+.chat-name {
+  font-size: 16px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #e8a084 0%, #faece6 100%);
+  -webkit-background-clip: text; /* Для WebKit-браузеров (Chrome, Safari) */
+  -webkit-text-fill-color: transparent; /* Прозрачный цвет текста */
+  background-clip: text; /* Для других браузеров */
+  text-fill-color: transparent; /* Поддержка цвета текста */
+}
+
+.chat-premium-badge {
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.chat-message {
+  color: #bdbdbd;
+  font-size: 14px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.chat-timestamp {
+  font-size: 10px;
+  color: #bdbdbd;
+}
+
+.chat-status {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.notification-badge {
+  width: 16px;
+  height: 16px;
+  background: #a084e8;
+  color: white;
+  font-size: 10px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.fab-button-container {
+  position: fixed;
+  bottom: 120px; /* Увеличиваем отступ от нижнего края */
+  right: 20px;
+  z-index: 10; /* Убедитесь, что кнопка поверх всех элементов */
+}
+
+.fab-button {
+  width: 58px;
+  height: 58px; /* Добавляем высоту, чтобы кнопка была квадратной */
+  font-size: 28px; /* Увеличиваем шрифт, чтобы крестик лучше соответствовал кнопке */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%; /* Закругляем кнопку */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  padding: 0; /* Убираем возможные внутренние отступы */
+  line-height: 28px; /* Совпадает с размером шрифта */
+}

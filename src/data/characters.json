@@ -1,0 +1,46 @@
+[
+    {
+      "id": 1,
+      "name": "Алиса",
+      "slug": "alisa",
+      "shortDescription": "Любит приключения и загадки.",
+      "fullDescription": "Алиса — это романтичная и откровенная собеседница, готовая к глубоким разговорам о жизни, любви и самых смелых фантазиях. Она легко поддержит беседу на любые темы и создаст атмосферу доверия и близости.",
+      "imageWebp": "/images/character/alice/alice.webp",
+      "imageJpeg": "/images/character/alice/alice.jpg",
+      "gallery": [
+        { "webp": "/images/character/alice/02.webp", "jpg": "/images/character/alice/02.jpg" },
+        { "webp": "/images/character/alice/03.webp", "jpg": "/images/character/alice/03.jpg" },
+        { "webp": "/images/character/alice/04.webp", "jpg": "/images/character/alice/04.jpg" },
+        { "webp": "/images/character/alice/05.webp", "jpg": "/images/character/alice/05.jpg" },
+        { "webp": "/images/character/alice/06.webp", "jpg": "/images/character/alice/06.jpg" },
+        { "webp": "/images/character/alice/07.webp", "jpg": "/images/character/alice/07.jpg" }
+  ],
+      "premiumPhotos": [
+        "/images/character/alice/premium1.webp"
+      ],
+      "premiumVideos": [
+        "/videos/character/alice/video1.mp4"
+      ],
+      "avatar": "/images/character/alice/alice.webp",
+      "fallbackAvatar": "/images/character/alice/alice.jpg",
+      "isPremium": true
+    },
+    {
+      "id": 2,
+      "name": "Ребекка",
+      "slug": "rebecca",
+      "shortDescription": "Знаток головоломок и таинственных историй.",
+      "fullDescription": "Ребекка обожает решать головоломки и исследовать тайны прошлого. Она всегда знает, как заинтриговать, и её загадочные истории никого не оставят равнодушными.",
+      "imageWebp": "/images/character/rebecca/rebecca.webp",
+      "imageJpeg": "/images/character/rebecca/rebecca.jpg",
+      "gallery": [
+        "/images/character/rebecca/gallery1.png"
+      ],
+      "premiumPhotos": [],
+      "premiumVideos": [],
+      "avatar": "/images/character/rebecca/rebecca.webp",
+      "fallbackAvatar": "/images/character/rebecca/rebecca.jpg",
+      "isPremium": false
+    }
+  ]
+  

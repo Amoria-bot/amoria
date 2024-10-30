@@ -1,0 +1,64 @@
+
+.payment-method h2 {
+  text-align: center;
+  background: linear-gradient(90deg, #e8a084 0%, #faece6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.payment-method h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 700;
+  color: #4D352C;
+}
+
+.back-button {
+  position: absolute;
+  left: 10px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  z-index: 1; /* Убедимся, что кнопка выше других элементов */
+}
+
+
+.back-button:hover {
+  background-color: rgba(160, 132, 232, 0.2); /* Полупрозрачный фон при наведении */
+}
+
+.method-options {
+  display: flex; /* Используем flex для расположения опций */
+  flex-direction: column; /* Опции в колонку */
+  align-items: center; /* Центрируем опции */
+  gap: 10px; /* Расстояние между опциями */
+  margin-bottom: 20px; /* Отступ снизу */
+}
+
+.method-option {
+  padding: 10px;
+  background-color: #333; /* Цвет фона для опций */
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%; /* Ширина опций на всю ширину контейнера */
+  max-width: 300px; /* Максимальная ширина опций */
+  text-align: center; /* Центрируем текст */
+}
+
+.method-option.active {
+  background-color: #A084E8; /* Цвет фона для активной опции */
+}
+
+
+.method-options button {
+  background: linear-gradient(118deg, #E8A084 0%, #FAECE6 100%);
+  color: #4D352C;
+  font-weight: 700;
+}
+
+.payment-method button {
+  background: linear-gradient(118deg, #E8A084 0%, #FAECE6 100%);
+  color: #4D352C;
+  font-weight: 700;
+}
