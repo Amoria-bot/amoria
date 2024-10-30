@@ -5,29 +5,16 @@ import './WheelOfFortune.css';
 import arrowLeft from '../../../assets/icon/arrow-left.svg';
 import ConfettiAnimation from '../../animations/ConfettiAnimation'; // Импорт анимации конфетти
 
-// Массив с данными и весами для каждого сектора
 const data = [
-  { option: '10 аморитов', amount: 10, weight: 30, style: { backgroundColor: '#A084E8', textColor: '#ffffff' } },
-  { option: '20 аморитов', amount: 20, weight: 15, style: { backgroundColor: '#856EC1', textColor: '#ffffff' } },
-  { option: '50 аморитов', amount: 50, weight: 15, style: { backgroundColor: '#42f554', textColor: '#000000' } },
-  { option: '100 аморитов', amount: 100, weight: 10, style: { backgroundColor: '#4EBFD6', textColor: '#ffffff' } },
-  { option: '150 аморитов', amount: 150, weight: 5, style: { backgroundColor: '#2FA26B', textColor: '#ffffff' } },
-  { option: '300 аморитов', amount: 300, weight: 2, style: { backgroundColor: '#CB5252', textColor: '#ffffff' } },
-  { option: '500 аморитов', amount: 500, weight: 2, style: { backgroundColor: '#F8D312', textColor: '#000000' } },
-  { option: 'Попробуй еще', amount: 0, weight: 21, style: { backgroundColor: '#f16496', textColor: '#000000' } },
+  { option: '10 аморитов', amount: 10, style: { backgroundColor: '#A084E8', textColor: '#ffffff' } },
+  { option: '50 аморитов', amount: 50, style: { backgroundColor: '#42f554', textColor: '#000000' } },
+  { option: '100 аморитов', amount: 100, style: { backgroundColor: '#4EBFD6', textColor: '#ffffff' } },
+  { option: '500 аморитов', amount: 500, style: { backgroundColor: '#F8D312', textColor: '#000000' } },
+  { option: '150 аморитов', amount: 150, style: { backgroundColor: '#2FA26B', textColor: '#ffffff' } },
+  { option: '300 аморитов', amount: 300, style: { backgroundColor: '#CB5252', textColor: '#ffffff' } },
+  { option: 'Попробуй еще', amount: 0, style: { backgroundColor: '#f16496', textColor: '#000000' } },
+  { option: '20 аморитов', amount: 20, style: { backgroundColor: '#856EC1', textColor: '#ffffff' } },
 ];
-
-// Функция для выбора сектора на основе весов
-const getRandomPrizeIndex = () => {
-  const totalWeight = data.reduce((sum, item) => sum + item.weight, 0);
-  let random = Math.floor(Math.random() * totalWeight);
-
-  for (let i = 0; i < data.length; i++) {
-    random -= data[i].weight;
-    if (random < 0) return i;
-  }
-  return 0;
-};
 
 const WheelOfFortune = () => {
   const navigate = useNavigate();
@@ -37,7 +24,7 @@ const WheelOfFortune = () => {
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
   const [reward, setReward] = useState(null);
-  const [showConfetti, setShowConfetti] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false); // Состояние для анимации
   const [isCooldownActive, setIsCooldownActive] = useState(
     JSON.parse(localStorage.getItem('isCooldownActive')) || false
   );
@@ -76,7 +63,7 @@ const WheelOfFortune = () => {
 
   const handleSpinClick = () => {
     if (!mustSpin && !isCooldownActive) {
-      const newPrizeNumber = getRandomPrizeIndex(); // Используем функцию для выбора сектора
+      const newPrizeNumber = Math.floor(Math.random() * data.length);
       setPrizeNumber(newPrizeNumber);
       setMustSpin(true);
     }
@@ -99,7 +86,7 @@ const WheelOfFortune = () => {
 
     setTimeout(() => {
       setShowConfetti(false); // Завершение анимации
-    }, 2000);
+    }, 3000);
   };
 
   const handleResetCooldown = () => {
@@ -165,7 +152,7 @@ const WheelOfFortune = () => {
           data={data}
           onStopSpinning={() => {
             setMustSpin(false);
-            handleReward();
+            handleReward(); // Обработка награды
           }}
           spinDuration={0.5}
           outerBorderColor="#faece6"

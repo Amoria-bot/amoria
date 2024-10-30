@@ -1,17 +1,21 @@
 // src/components/screens/RewardScreen/RewardScreen.js
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 import './RewardScreen.css';
 import rewardImage from '../../../assets/images/reward.png'; // Импорт изображения
 import Button from '../../common/Button/Button'; // Импорт кнопки
+import ConfettiAnimation from '../../animations/ConfettiAnimation'; // Импорт анимации
 
 const RewardScreen = ({ streak, onClose }) => {
   const [reward, setReward] = useState(0); // Текущая награда
+  const [showConfetti, setShowConfetti] = useState(false); // Управление анимацией
+  const confettiActive = useRef(false); // Контроль активации анимации
 
   // Функция для обновления баланса
   const updateAmoritBalance = useCallback((amount) => {
     const prevBalance = parseInt(localStorage.getItem('amoritBalance'), 10) || 0;
     const newBalance = prevBalance + amount;
     localStorage.setItem('amoritBalance', newBalance); // Обновление LocalStorage
+    console.log(`Баланс обновлён: ${prevBalance} + ${amount} = ${newBalance}`);
   }, []);
 
   // Логика расчёта награды в зависимости от стрика
@@ -19,6 +23,19 @@ const RewardScreen = ({ streak, onClose }) => {
     const calculatedReward = streak >= 10 ? 100 : streak * 10;
     setReward(calculatedReward); // Устанавливаем награду
     updateAmoritBalance(calculatedReward); // Обновляем баланс
+
+    // Показываем конфетти только если день не пропущен
+    if (streak > 0 && !confettiActive.current) {
+      confettiActive.current = true;
+      setShowConfetti(true);
+      console.log('Запуск анимации конфетти для награды');
+
+      setTimeout(() => {
+        setShowConfetti(false);
+        confettiActive.current = false;
+        console.log('Анимация конфетти завершена');
+      }, 2000); // Конфетти отображается 3 секунды
+    }
   }, [streak, updateAmoritBalance]);
 
   return (
@@ -32,6 +49,12 @@ const RewardScreen = ({ streak, onClose }) => {
       <div className="continue-button">
         <Button onClick={onClose} text="Продолжить" />
       </div>
+
+      {showConfetti && (
+        <div className="confetti-overlay">
+          <ConfettiAnimation />
+        </div>
+      )}
     </div>
   );
 };

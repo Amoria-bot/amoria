@@ -1,16 +1,17 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import './TapGame.css';
 import characterImage from '../../../assets/images/ass.webp';
-import arrowLeft from '../../../assets/icon/arrow-left.svg'; // Подключаем иконку
+import arrowLeft from '../../../assets/icon/arrow-left.svg';
+import ConfettiAnimation from '../../animations/ConfettiAnimation'; // Импорт анимации
 
 const TapGame = ({ onBack }) => {
   const canvasRef = useRef(null);
+  const confettiActive = useRef(false); // Контроль анимации конфетти
+  const [showConfetti, setShowConfetti] = useState(false); // Видимость конфетти
 
-  // 1.1: Инициализируем состояние для баланса аморитов
   const [amoritBalance, setAmoritBalance] = useState(
     parseInt(localStorage.getItem('amoritBalance'), 10) || 0
   );
-
   const [tapsRemaining, setTapsRemaining] = useState(() => {
     const savedTaps = localStorage.getItem('tapsRemaining');
     return savedTaps !== null ? parseInt(savedTaps, 10) : 100;
@@ -33,16 +34,29 @@ const TapGame = ({ onBack }) => {
   const [hasWon, setHasWon] = useState(false);
   const savedAlpha = parseFloat(localStorage.getItem('overlayAlpha')) || 0;
 
-  // 1.2: Функция для обновления баланса и сохранения в LocalStorage
   const updateAmoritBalance = (amount) => {
     const newBalance = amoritBalance + amount;
     setAmoritBalance(newBalance);
     localStorage.setItem('amoritBalance', newBalance);
   };
 
-  // Пример использования при победе в игре
   const handleWin = () => {
     updateAmoritBalance(50); // Зачисляем 50 аморитов за 100 тапов
+    triggerConfetti(); // Запуск анимации
+  };
+
+  const triggerConfetti = () => {
+    if (!confettiActive.current) {
+      console.log('Запуск анимации конфетти');
+      confettiActive.current = true;
+      setShowConfetti(true); // Отображаем конфетти
+
+      setTimeout(() => {
+        setShowConfetti(false); // Скрываем конфетти через 3 секунды
+        confettiActive.current = false;
+        console.log('Анимация конфетти завершена');
+      }, 3000);
+    }
   };
 
   const resizeCanvas = useCallback(() => {
@@ -122,7 +136,7 @@ const TapGame = ({ onBack }) => {
       if (newTapsRemaining === 0) {
         setHasWon(true);
         setIsSessionActive(false);
-        handleWin(); // Обработка победы
+        handleWin(); // Победа
         startCooldown();
       }
     }
@@ -188,12 +202,7 @@ const TapGame = ({ onBack }) => {
 
   return (
     <div className="tap-game">
-      <img
-        src={arrowLeft}
-        alt="Назад"
-        className="back-button"
-        onClick={onBack}
-      />
+      <img src={arrowLeft} alt="Назад" className="back-button" onClick={onBack} />
       <h2>Тапай по попке и&#160;зарабатывай&#160;амориты!</h2>
       <h3>🪙 {amoritBalance} - Твой текущий баланс</h3>
       <div className="canvas-container">
@@ -201,16 +210,11 @@ const TapGame = ({ onBack }) => {
       </div>
       <h4>{100 - tapsRemaining} / 100</h4>
       <div className="progress-bar">
-        <div
-          style={{ width: `${((100 - tapsRemaining) / 100) * 100}%` }}
-          className="progress"
-        />
+        <div style={{ width: `${((100 - tapsRemaining) / 100) * 100}%` }} className="progress" />
         <span>Ты натапал {100 - tapsRemaining} из 100!</span>
       </div>
 
-      {!isSessionActive && hasWon && (
-        <h4>Поздравляем! Ты заработал 50 аморитов за свои 100 тапов!</h4>
-      )}
+      {!isSessionActive && hasWon && <h4>Поздравляем! Ты заработал 50 аморитов за свои 100 тапов!</h4>}
 
       {isCooldownActive && (
         <>
@@ -222,8 +226,15 @@ const TapGame = ({ onBack }) => {
       <button className="reset-button" onClick={resetCooldownAndGame}>
         Сбросить таймер и игру
       </button>
+
+      {showConfetti && (
+        <div className="confetti-overlay">
+          <ConfettiAnimation />
+        </div>
+      )}
     </div>
   );
 };
 
 export default TapGame;
+

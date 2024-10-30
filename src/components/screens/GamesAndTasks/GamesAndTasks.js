@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TapGame from '../TapGame/TapGame';
 import './GamesAndTasks.css';
@@ -6,15 +6,17 @@ import wheelIcon from '../../../assets/images/wheel-of-fortune-icon.png';
 import taplIcon from '../../../assets/images/tap-icon.png';
 import xIcon from '../../../assets/icon/x.svg';
 import telegramIcon from '../../../assets/icon/tg.svg';
+import ConfettiAnimation from '../../animations/ConfettiAnimation';
 
 const GamesAndTasks = () => {
   const [isTapGameActive, setTapGameActive] = useState(false);
   const [xStatus, setXStatus] = useState('Подписаться');
   const [telegramStatus, setTelegramStatus] = useState('Подписаться');
+  const confettiActive = useRef(false); // Используем useRef для контроля анимации
+  const [showOverlay, setShowOverlay] = useState(false); // Управление видимостью подложки
 
   const navigate = useNavigate();
 
-  // Обновление баланса аморитов при выполнении задач
   const updateAmoritBalance = useCallback((amount) => {
     const currentBalance = parseInt(localStorage.getItem('amoritBalance'), 10) || 0;
     const newBalance = currentBalance + amount;
@@ -31,10 +33,27 @@ const GamesAndTasks = () => {
   }, []);
 
   const saveTaskStatus = (platform, status) => {
+    console.log(`Сохраняем статус для ${platform}: ${status}`);
     localStorage.setItem(`${platform}Status`, status);
   };
 
+  const triggerConfetti = () => {
+    if (!confettiActive.current) {
+      console.log('Запуск анимации конфетти');
+      confettiActive.current = true; // Устанавливаем флаг активности
+      setShowOverlay(true); // Показываем подложку
+      setTimeout(() => {
+        confettiActive.current = false; // Сбрасываем флаг активности
+        setShowOverlay(false); // Убираем подложку
+        console.log('Анимация конфетти завершена');
+      }, 2000);
+    } else {
+      console.log('Анимация уже запущена');
+    }
+  };
+
   const handleSubscriptionClick = (platform) => {
+    console.log(`Нажата кнопка подписки для: ${platform}`);
     if (platform === 'x' && xStatus === 'Подписаться') {
       setXStatus('Проверить');
       saveTaskStatus('x', 'Проверить');
@@ -45,18 +64,22 @@ const GamesAndTasks = () => {
   };
 
   const handleVerificationClick = (platform) => {
+    console.log(`Проверка подписки для: ${platform}`);
     if (platform === 'x' && xStatus === 'Проверить') {
       setXStatus('Выполнено');
       saveTaskStatus('x', 'Выполнено');
-      updateAmoritBalance(100); // Добавляем 100 аморитов за подписку
+      updateAmoritBalance(100);
+      triggerConfetti();
     } else if (platform === 'telegram' && telegramStatus === 'Проверить') {
       setTelegramStatus('Выполнено');
       saveTaskStatus('telegram', 'Выполнено');
-      updateAmoritBalance(100); // Добавляем 100 аморитов за подписку
+      updateAmoritBalance(100);
+      triggerConfetti();
     }
   };
 
   const resetTasks = () => {
+    console.log(`Сброс заданий`);
     setXStatus('Подписаться');
     setTelegramStatus('Подписаться');
     localStorage.removeItem('xStatus');
@@ -132,6 +155,12 @@ const GamesAndTasks = () => {
       <button className="reset-button" onClick={resetTasks}>
         Сбросить задания
       </button>
+
+      {showOverlay && (
+        <div className="confetti-overlay">
+          <ConfettiAnimation />
+        </div>
+      )}
     </div>
   );
 };
