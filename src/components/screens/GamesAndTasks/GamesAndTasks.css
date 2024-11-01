@@ -12,10 +12,18 @@
     -webkit-text-fill-color: transparent;
 }
 
-.wheel-icon {
-  margin-bottom: 20px; /* Нижний отступ */
-  max-width: 100%; /* Ограничиваем размер изображения */
+.tap-icon {
   height: auto;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%; /* Делаем изображение круглым */
+  object-fit: cover; /* Убедимся, что изображение заполнит круг */
+}
+
+.wheel-icon {
+  height: auto;
+  width: 96px;
+  height: 96px;
 }
 
 .game-card button {

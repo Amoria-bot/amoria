@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import TapGame from '../TapGame/TapGame';
 import './GamesAndTasks.css';
 import wheelIcon from '../../../assets/images/wheel-of-fortune-icon.png';
-import taplIcon from '../../../assets/images/tap-icon.png';
+import tapIcon from '../../../assets/images/ass.webp';
 import xIcon from '../../../assets/icon/x.svg';
 import telegramIcon from '../../../assets/icon/tg.svg';
 import ConfettiAnimation from '../../animations/ConfettiAnimation';
@@ -95,14 +95,14 @@ const GamesAndTasks = () => {
       <h2>Играй и зарабатывай амориты!</h2>
 
       <div className="game-card">
-        <img src={wheelIcon} alt="Wheel of Fortune" className="wheel-icon" />
+        <img src={tapIcon} alt="Wheel of Fortune" className="tap-icon" />
         <h2>Тапай по попке и&#160;зарабатывай&#160;амориты!</h2>
         <p>+50 аморитов ежедневно</p>
         <button onClick={() => setTapGameActive(true)}>Играть</button>
       </div>
 
       <div className="game-card">
-        <img src={taplIcon} alt="Tap Game" className="tap-icon" />
+        <img src={wheelIcon} alt="Tap Game" className="wheel-icon" />
         <h2>Крути колесо фортуны и&#160;выиграй!</h2>
         <p>+50 аморитов ежедневно</p>
         <button onClick={() => navigate('/wheel-of-fortune')}>Играть</button>

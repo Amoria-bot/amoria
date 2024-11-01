@@ -80,7 +80,7 @@ function CharacterProfile() {
   }, [slug, character.id]);
 
   const handleUnlock = () => {
-    if (balance >= 100) {
+    if (balance >= 1000) {
       setShowConfirmUnlockPopup(true);
     } else {
       setShowBalancePopup(true);
@@ -88,7 +88,7 @@ function CharacterProfile() {
   };
 
   const confirmUnlock = () => {
-    const newBalance = balance - 100;
+    const newBalance = balance - 1000;
     updateBalance(newBalance);
     setBalance(newBalance);
 
@@ -262,7 +262,7 @@ function CharacterProfile() {
 
       {!isUnlocked && character.isPremium ? (
         <button className="unlock-button" onClick={handleUnlock}>
-          Разблокировать чат с {character.name} за 100 🪙
+          Разблокировать чат с {character.name} за 1000 🪙
         </button>
       ) : (
         <button className="chat-button" onClick={() => navigate(`/chat/${character.slug}`)}>
@@ -303,7 +303,7 @@ function CharacterProfile() {
             <button className="close-button" onClick={closePopup}>×</button>
             <h3>Разблокировка чата с премиум-персонажем</h3>
             <p>Ваш текущий баланс аморитов: {balance} 🪙</p>
-            <p>Списываем 100 аморитов за разблокировку чата с {character.name}.</p>
+            <p>Списываем 1000 аморитов за разблокировку чата с {character.name}.</p>
             <button onClick={confirmUnlock}>Продолжить</button>
           </div>
         </div>
