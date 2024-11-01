@@ -156,3 +156,5 @@ button .button-icon::after {
     justify-content: center;
     pointer-events: none; /* Чтобы клики не проходили через конфетти */
   }
+
+  

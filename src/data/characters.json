@@ -16,7 +16,9 @@
         { "webp": "/images/character/alice/07.webp", "jpg": "/images/character/alice/07.jpg" }
   ],
       "premiumPhotos": [
-        "/images/character/alice/premium1.webp"
+        { "webp": "/images/character/alice/01p.webp", "jpg": "/images/character/alice/01p.jpg" },
+        { "webp": "/images/character/alice/02p.webp", "jpg": "/images/character/alice/02p.jpg" },
+        { "webp": "/images/character/alice/03p.webp", "jpg": "/images/character/alice/03p.jpg" }
       ],
       "premiumVideos": [
         "/videos/character/alice/video1.mp4"
@@ -34,8 +36,14 @@
       "imageWebp": "/images/character/rebecca/rebecca.webp",
       "imageJpeg": "/images/character/rebecca/rebecca.jpg",
       "gallery": [
-        "/images/character/rebecca/gallery1.png"
-      ],
+        { "webp": "/images/character/rebecca/02.webp", "jpg": "/images/character/rebecca/02.jpg" },
+        { "webp": "/images/character/rebecca/03.webp", "jpg": "/images/character/rebecca/03.jpg" },
+        { "webp": "/images/character/rebecca/04.webp", "jpg": "/images/character/rebecca/04.jpg" },
+        { "webp": "/images/character/rebecca/05.webp", "jpg": "/images/character/rebecca/05.jpg" },
+        { "webp": "/images/character/rebecca/06.webp", "jpg": "/images/character/rebecca/06.jpg" },
+        { "webp": "/images/character/rebecca/07.webp", "jpg": "/images/character/rebecca/07.jpg" },
+        { "webp": "/images/character/rebecca/08.webp", "jpg": "/images/character/rebecca/08.jpg" }
+  ],
       "premiumPhotos": [],
       "premiumVideos": [],
       "avatar": "/images/character/rebecca/rebecca.webp",

@@ -1,4 +1,3 @@
-// src/components/screens/RewardScreen/RewardScreen.js
 import React, { useEffect, useState, useCallback, useRef } from 'react';
 import './RewardScreen.css';
 import rewardImage from '../../../assets/images/reward.png'; // Импорт изображения
@@ -20,9 +19,13 @@ const RewardScreen = ({ streak, onClose }) => {
 
   // Логика расчёта награды в зависимости от стрика
   useEffect(() => {
+    const initialBalance = parseInt(localStorage.getItem('amoritBalance'), 10) || 0;
+    console.log("Начальный баланс аморитов:", initialBalance); // Лог для начального баланса
+
     const calculatedReward = streak >= 10 ? 100 : streak * 10;
     setReward(calculatedReward); // Устанавливаем награду
     updateAmoritBalance(calculatedReward); // Обновляем баланс
+    console.log("Вычисленная награда:", calculatedReward); // Лог для награды
 
     // Показываем конфетти только если день не пропущен
     if (streak > 0 && !confettiActive.current) {

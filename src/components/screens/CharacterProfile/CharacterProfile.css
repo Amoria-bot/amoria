@@ -34,6 +34,7 @@
   grid-template-columns: repeat(3, 1fr); /* Три изображения в ряд */
   gap: 0.625rem; /* 10px */
   width: 100%; /* Чтобы галерея занимала всю доступную ширину */
+  margin-bottom: 2rem;
 }
 
 .gallery-image {
@@ -46,7 +47,8 @@
 }
 
 /* Отступы сверху и снизу для кнопок */
-.character-profile button {
+.chat-button,
+.unlock-button {
   margin-top: 2rem;   /* 32px */
   margin-bottom: 2rem; /* 32px */
 }
@@ -320,4 +322,89 @@ form .submit-button {
 .error-message {
   color: #CB5252;
   font-size: 0.875rem;
+}
+
+/* Контейнер для попапа недостаточного баланса */
+.balance-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.balance-popup-overlay .balance-popup-content {
+  background-color: #303030;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 90%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.balance-popup-overlay .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+.balance-popup-content h3 {
+  text-align: center;
+}
+.balance-popup-content p {
+  text-align: center;
+}
+
+.premium-gallery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Три изображения в ряд */
+  gap: 0.625rem; /* 10px */
+  width: 100%; /* Занимает всю ширину */
+}
+
+.premium-gallery-image-container {
+  position: relative; /* Для наложения замка */
+  border-radius: 0.3125rem; /* Радиус как у основной галереи */
+  overflow: hidden; /* Обрезка по границам */
+}
+
+.premium-gallery-image {
+  width: 100%; /* Заполняет ячейку */
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  filter: blur(4px); /* Размытие для заблокированного изображения */
+  transition: transform 0.3s;
+}
+
+.lock-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4); /* Полупрозрачный фон */
+  border-radius: 0.3125rem;
+}
+
+.lock-icon {
+  font-size: 1.5rem;
+  color: white;
+}
+
+.premium-gallery-image.unlocked {
+  filter: none;
 }

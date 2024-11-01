@@ -7,7 +7,6 @@ import './CharacterProfile.css';
 import LikeIcon from '../../../assets/icon/like.svg';
 import DislikeIcon from '../../../assets/icon/dislike.svg';
 import arrowLeft from '../../../assets/icon/arrow-left.svg';
-import LockIcon from '../../../assets/icon/lock.svg'; // Импортируем иконку
 import charactersData from '../../../data/characters.json';
 
 // Получение и обновление баланса из localStorage с проверкой значения
@@ -19,21 +18,6 @@ const getBalance = () => {
 const updateBalance = (newBalance) => {
   localStorage.setItem('amoritBalance', newBalance);
   console.log("Обновляем баланс в localStorage:", newBalance);
-};
-
-// Функция для получения разблокированных премиум-изображений из localStorage
-const getUnlockedPremiumImages = (characterId) => {
-  const unlockedImages = JSON.parse(localStorage.getItem(`unlockedImages-${characterId}`)) || [];
-  return unlockedImages;
-};
-
-// Функция для обновления разблокированных премиум-изображений в localStorage
-const updateUnlockedPremiumImages = (characterId, imageIndex) => {
-  const unlockedImages = getUnlockedPremiumImages(characterId);
-  if (!unlockedImages.includes(imageIndex)) {
-    unlockedImages.push(imageIndex);
-    localStorage.setItem(`unlockedImages-${characterId}`, JSON.stringify(unlockedImages));
-  }
 };
 
 function CharacterProfile() {
@@ -55,9 +39,6 @@ function CharacterProfile() {
   const [showBalancePopup, setShowBalancePopup] = useState(false);
   const [showGalleryPopup, setShowGalleryPopup] = useState(false);
   const [showConfirmUnlockPopup, setShowConfirmUnlockPopup] = useState(false);
-  const [showPremiumConfirmUnlockPopup, setShowPremiumConfirmUnlockPopup] = useState(false);
-  const [selectedPremiumImage, setSelectedPremiumImage] = useState(null);
-  const [unlockedPremiumImages, setUnlockedPremiumImages] = useState([]);
 
   useEffect(() => {
     const unlockedCharacters = JSON.parse(localStorage.getItem('unlockedCharacters')) || [];
@@ -74,9 +55,6 @@ function CharacterProfile() {
     if (storedComments) setComments(JSON.parse(storedComments));
 
     setBalance(getBalance()); // Установка баланса при загрузке компонента
-
-    // Получение разблокированных премиум-изображений из localStorage
-    setUnlockedPremiumImages(getUnlockedPremiumImages(character.id));
   }, [slug, character.id]);
 
   const handleUnlock = () => {
@@ -100,47 +78,14 @@ function CharacterProfile() {
     setShowConfirmUnlockPopup(false);
   };
 
-  const handlePremiumUnlock = (img, index) => {
-    if (unlockedPremiumImages.includes(index)) {
-      // Если изображение уже разблокировано, сразу показываем попап
-      setPopupImage(img.src || img.webp || img.jpg);
-      setShowGalleryPopup(true);
-      return;
-    }
-    if (balance >= 50) { // Списываем 50 аморитов для изображения
-      setSelectedPremiumImage(img);
-      setCurrentIndex(index);
-      setShowPremiumConfirmUnlockPopup(true);
-    } else {
-      setShowBalancePopup(true);
-    }
-  };
-
-  const confirmPremiumUnlock = () => {
-    const newBalance = balance - 50;
-    updateBalance(newBalance);
-    setBalance(newBalance);
-    setShowPremiumConfirmUnlockPopup(false);
-
-    // Сохраняем разблокированное изображение в localStorage и обновляем стейт
-    updateUnlockedPremiumImages(character.id, currentIndex);
-    setUnlockedPremiumImages((prev) => [...prev, currentIndex]);
-
-    setPopupImage(selectedPremiumImage.src || selectedPremiumImage.webp || selectedPremiumImage.jpg);
-    setShowGalleryPopup(true);
-  };
-
   const resetUnlockedChats = () => {
     localStorage.removeItem('unlockedCharacters');
-    localStorage.removeItem(`unlockedImages-${character.id}`); // Сброс премиум-изображений
     setIsUnlocked(false);
-    setUnlockedPremiumImages([]); // Сброс состояния разблокированных изображений
   };
-  
+
   const closePopup = () => {
     setShowBalancePopup(false);
     setShowConfirmUnlockPopup(false);
-    setShowPremiumConfirmUnlockPopup(false);
   };
 
   const handleBuyAmorites = () => navigate('/star-purchase');
@@ -204,61 +149,37 @@ function CharacterProfile() {
   if (!character) return <p>Персонаж не найден!</p>;
 
   return (
-    <>
-      <div className="character-profile">
-        <button onClick={handleBack} className="back-button">
-          <img src={arrowLeft} alt="Назад" className="back-icon" />
-        </button>
+    <div className="character-profile">
+      <button onClick={handleBack} className="back-button">
+        <img src={arrowLeft} alt="Назад" className="back-icon" />
+      </button>
 
-        <img
-          src={character.imageWebp || character.imageJpeg}
-          alt={character.name}
-          className="character-image"
-          onError={(e) => (e.target.src = character.imageJpeg)}
-          onClick={() => openPopup({ src: character.imageJpeg }, -1)}
-        />
+      <img
+        src={character.imageWebp || character.imageJpeg}
+        alt={character.name}
+        className="character-image"
+        onError={(e) => (e.target.src = character.imageJpeg)}
+        onClick={() => openPopup({ src: character.imageJpeg }, -1)}
+      />
 
-        <StatusBadge status={statuses[character.slug]} />
+      <StatusBadge status={statuses[character.slug]} />
 
-        <h2>{character.name}</h2>
-        <p>{character.fullDescription || character.description}</p>
+      <h2>{character.name}</h2>
+      <p>{character.fullDescription || character.description}</p>
 
-        <h3>Галерея</h3>
-        <div className="gallery">
-          {character.gallery.map((img, index) => (
-            <img
-              key={index}
-              src={img.webp || img.jpg}
-              alt={`Gallery ${index + 1}`}
-              onError={(e) => (e.target.src = img.jpg)}
-              onClick={() => openPopup(img, index)}
-              className="gallery-image"
-            />
-          ))}
-        </div>
-
-        <h3>Премиум Галерея</h3>
-        <div className="premium-gallery">
-          {character.premiumPhotos.map((img, index) => (
-            <div
-              key={index}
-              className="premium-gallery-image-container"
-              onClick={() => handlePremiumUnlock(img, index)}
-            >
-              <img
-                src={img.webp || img.jpg}
-                alt={`Premium ${index + 1}`}
-                onError={(e) => (e.target.src = img.jpg)}
-                className={`premium-gallery-image ${unlockedPremiumImages.includes(index) ? 'unlocked' : 'blurred'}`}
-              />
-              {!unlockedPremiumImages.includes(index) && (
-                <div className="lock-overlay">
-                  <img src={LockIcon} alt="Замок" className="lock-icon" />
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+      <h3>Галерея</h3>
+      <div className="gallery">
+        {character.gallery.map((img, index) => (
+          <img
+            key={index}
+            src={img.webp || img.jpg}
+            alt={`Gallery ${index + 1}`}
+            onError={(e) => (e.target.src = img.jpg)}
+            onClick={() => openPopup(img, index)}
+            className="gallery-image"
+          />
+        ))}
+      </div>
 
       {!isUnlocked && character.isPremium ? (
         <button className="unlock-button" onClick={handleUnlock}>
@@ -289,7 +210,7 @@ function CharacterProfile() {
             <button className="close-button" onClick={closePopup}>×</button>
             <h3>Недостаточно аморитов!</h3>
             <p>Ваш баланс: {balance} 🪙</p>
-            <p>У вас недостаточно аморитов для разблокировки элемента.</p>
+            <p>У вас недостаточно аморитов для разблокировки чата с {character.name}.</p>
             <button onClick={handleBuyAmorites}>
               Купить Амориты
             </button>
@@ -302,21 +223,8 @@ function CharacterProfile() {
           <div className="balance-popup-content" onClick={(e) => e.stopPropagation()}>
             <button className="close-button" onClick={closePopup}>×</button>
             <h3>Разблокировка чата с премиум-персонажем</h3>
-            <p>Ваш текущий баланс аморитов: {balance} 🪙</p>
             <p>Списываем 100 аморитов за разблокировку чата с {character.name}.</p>
             <button onClick={confirmUnlock}>Продолжить</button>
-          </div>
-        </div>
-      )}
-
-      {showPremiumConfirmUnlockPopup && (
-        <div className="balance-popup-overlay" onClick={closePopup}>
-          <div className="balance-popup-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={closePopup}>×</button>
-            <h3>Разблокировка премиум-изображения</h3>
-            <p>Ваш текущий баланс аморитов: {balance} 🪙</p>
-            <p>Списываем 50 аморитов за разблокировку изображения.</p>
-            <button onClick={confirmPremiumUnlock}>Продолжить</button>
           </div>
         </div>
       )}
@@ -358,8 +266,7 @@ function CharacterProfile() {
       <button className="reset-button" onClick={resetUnlockedChats}>
         Сбросить разблокировки
       </button>
-      </div>
-    </>
+    </div>
   );
 }
 

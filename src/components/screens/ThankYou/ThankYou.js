@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ThankYou.css';
-import ConfettiAnimation from '../../animations/ConfettiAnimation'; // Импорт анимации
+import ConfettiAnimation from '../../animations/ConfettiAnimation'; // Подключение анимации
 
 const ThankYou = ({ amount }) => {
   const navigate = useNavigate();
@@ -10,12 +10,7 @@ const ThankYou = ({ amount }) => {
   );
   const [showConfetti, setShowConfetti] = useState(false); // Управление анимацией
 
-  // Сброс флага balanceUpdated при монтировании компонента
-  useEffect(() => {
-    localStorage.removeItem('balanceUpdated');
-    console.log('Флаг balanceUpdated сброшен');
-  }, []);
-
+  // Проверяем, обновлялся ли баланс ранее для этого экрана
   const updateAmoritBalance = useCallback((amount) => {
     const alreadyUpdated = localStorage.getItem('balanceUpdated');
 
@@ -30,7 +25,11 @@ const ThankYou = ({ amount }) => {
 
       // Запуск анимации конфетти
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 2000);
+      console.log('Анимация конфетти запущена'); // Лог для проверки анимации
+      setTimeout(() => {
+        setShowConfetti(false);
+        console.log('Анимация конфетти завершена'); // Лог для завершения анимации
+      }, 2000);
     } else {
       console.log('Баланс уже был обновлён ранее.');
     }
@@ -49,16 +48,11 @@ const ThankYou = ({ amount }) => {
 
   return (
     <div className="thank-you">
-      {showConfetti && (
-        <div className="confetti-overlay">
-          <ConfettiAnimation />
-        </div>
-      )}
-
       <h2>Спасибо за покупку!</h2>
       <h3>Поздравляем, ты получил свои амориты!</h3>
       <div className="star-animation">🪙</div>
 
+      {/* Отображение баланса */}
       <h1>{amoritBalance}</h1>
       <p>Твой текущий баланс</p>
 
@@ -69,6 +63,13 @@ const ThankYou = ({ amount }) => {
       <p>
         Теперь ты можешь использовать амориты 🪙 для доступа к эксклюзивным фото, видео и чатам!
       </p>
+
+      {/* Отображение анимации конфетти */}
+      {showConfetti && (
+        <div className="confetti-overlay">
+          <ConfettiAnimation />
+        </div>
+      )}
     </div>
   );
 };
