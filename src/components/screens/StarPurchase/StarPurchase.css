@@ -1,54 +1,238 @@
-  .star-purchase h2 {
-    text-align: center;
-    background: linear-gradient(90deg, #e8a084 0%, #faece6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-  }
-
-  .star-purchase h1 {
-    text-align: center;
-    background: linear-gradient(90deg, #e8a084 0%, #faece6 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    margin-bottom: var(--spacing-small);
-  }
-
-  .star-purchase h1 .amorit-icon {
-    background: none; /* Убираем фон */
-    -webkit-background-clip: initial;
-    -webkit-text-fill-color: initial; /* Устанавливаем стандартный цвет */
-    margin-left: 4px
-  }
-
-  
-  .star-purchase button {
-    background: linear-gradient(118deg, #E8A084 0%, #FAECE6 100%);
-    color: #4D352C;
-    font-weight: 700;
+.star-purchase h2 {
+  text-align: center;
+  background: linear-gradient(90deg, #e8a084 0%, #faece6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-  .amount-options {
-    display: flex; /* Используем flex для расположения блоков */
-    flex-direction: column; /* Блоки в колонку */
-    align-items: center; /* Центрируем блоки */
-    gap: 10px; /* Расстояние между блоками */
-    margin-bottom: 20px; /* Отступ снизу */
-  }
-  
-  .amount-option {
-    padding: 10px;
-    background-color: #333; /* Цвет фона для блоков */
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%; /* Ширина блоков на всю ширину контейнера */
-    text-align: center; /* Центрируем текст */
-  }
-  
-  .amount-option.active {
-    background-color: #A084E8; /* Цвет фона для активного блока */
-  }
+.star-purchase h1 {
+  text-align: center;
+  background: linear-gradient(90deg, #e8a084 0%, #faece6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: var(--spacing-small);
+}
 
-  .purchase-section h3 {
-    text-align: center;
-  }
+.star-purchase h1 .amorit-icon {
+  background: none; /* Убираем фон */
+  -webkit-background-clip: initial;
+  -webkit-text-fill-color: initial; /* Устанавливаем стандартный цвет */
+  margin-left: 4px;
+}
+
+.star-purchase button {
+  background: linear-gradient(118deg, #E8A084 0%, #FAECE6 100%);
+  color: #4D352C;
+  font-weight: 700;
+}
+
+.amount-options {
+  display: flex; /* Используем flex для расположения блоков */
+  flex-direction: column; /* Блоки в колонку */
+  align-items: center; /* Центрируем блоки */
+  gap: 10px; /* Расстояние между блоками */
+  margin-bottom: 20px; /* Отступ снизу */
+}
+
+.amount-option {
+  padding: 10px;
+  background-color: #333; /* Цвет фона для блоков */
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%; /* Ширина блоков на всю ширину контейнера */
+  text-align: center; /* Центрируем текст */
+}
+
+.amount-option.active {
+  background-color: #A084E8; /* Цвет фона для активного блока */
+}
+
+.purchase-section h3 {
+  text-align: center;
+}
+
+/* Основной контейнер подписки */
+.subscription-container {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+
+.subscription-container h2 {
+  margin-bottom: 0;
+}
+
+/* Опции подписки (месяц и год) */
+.subscription-options {
+  display: flex;
+  gap: 16px;
+}
+
+.subscription-option {
+  position: relative; /* Для позиционирования радиокнопки относительно блока */
+  flex: 1 1 0;
+  padding: 24px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+}
+
+.subscription-option.monthly {
+  background: #E8A084;
+}
+
+.subscription-option.yearly {
+  background: #FAECE6;
+}
+
+.subscription-option .duration {
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.subscription-option .duration2 {
+  color: #C1856E;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.subscription-option.monthly .price {
+  color: white;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.subscription-option.yearly .price {
+  color: #C1856E;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.subscription-option.yearly .monthly-rate {
+  color: #939393;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22.4px;
+}
+
+/* Индикатор выбора подписки */
+.indicator {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Блок преимуществ */
+.premium-badge-s {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+}
+
+.subscription-benefits {
+  width: 100%;
+  padding: 16px;
+  background: #352C4D;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+}
+
+.subscription-benefits h3 {
+  color: #F3CFC1;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 0;
+}
+
+/* Стиль для каждого преимущества */
+.benefit {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+/* Новый стиль для иконок преимуществ */
+.benefit .benefit-icon {
+  width: 36px;
+  height: 36px;
+  display: inline-block;
+  object-fit: cover;
+}
+
+/* Индивидуальные классы для иконок преимуществ */
+.ChatUnlock {
+  color: #FFD700; /* Золотистый для доступа к чатам */
+}
+
+.PremiumGallery {
+  color: #FF69B4; /* Розовый для галерей */
+}
+
+.RewardBoost {
+  color: #00FF7F; /* Зеленый для наград */
+}
+
+.PrioritySupport {
+  color: #87CEEB; /* Голубой для поддержки */
+}
+
+/* Текст каждого преимущества */
+.benefit .benefit-text {
+  color: white;
+  text-align: left;
+}
+
+.benefit .benefit-text strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.benefit .benefit-text p {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 19.2px;
+}
+
+.radio-button {
+  width: 20px;
+  height: 20px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  position: absolute; /* Закрепляем кнопку */
+  top: 10px; /* Расстояние от верхнего края блока */
+  right: 10px; /* Расстояние от правого края блока */
+}
+
+.radio-button.active {
+  background: #303030;
+  border-radius: 50%;
+  border: 1px solid white;
+}
+
+.radio-button.active::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.radio-button.inactive {
+  background: #303030;
+  border-radius: 50%;
+  border: 1px solid #939393;
+}
