@@ -6,14 +6,14 @@ import arrowLeft from '../../../assets/icon/arrow-left.svg';
 import ConfettiAnimation from '../../animations/ConfettiAnimation'; // Импорт анимации конфетти
 
 const data = [
-  { option: '10 аморитов', amount: 10, style: { backgroundColor: '#A084E8', textColor: '#ffffff' } },
-  { option: '50 аморитов', amount: 50, style: { backgroundColor: '#42f554', textColor: '#000000' } },
-  { option: '100 аморитов', amount: 100, style: { backgroundColor: '#4EBFD6', textColor: '#ffffff' } },
-  { option: '500 аморитов', amount: 500, style: { backgroundColor: '#F8D312', textColor: '#000000' } },
-  { option: '150 аморитов', amount: 150, style: { backgroundColor: '#2FA26B', textColor: '#ffffff' } },
-  { option: '300 аморитов', amount: 300, style: { backgroundColor: '#CB5252', textColor: '#ffffff' } },
+  { option: '10 $AMOCOIN', amount: 10, style: { backgroundColor: '#A084E8', textColor: '#ffffff' } },
+  { option: '50 $AMOCOIN', amount: 50, style: { backgroundColor: '#42f554', textColor: '#000000' } },
+  { option: '100 $AMOCOIN', amount: 100, style: { backgroundColor: '#4EBFD6', textColor: '#ffffff' } },
+  { option: '500 $AMOCOIN', amount: 500, style: { backgroundColor: '#F8D312', textColor: '#000000' } },
+  { option: '150 $AMOCOIN', amount: 150, style: { backgroundColor: '#2FA26B', textColor: '#ffffff' } },
+  { option: '300 $AMOCOIN', amount: 300, style: { backgroundColor: '#CB5252', textColor: '#ffffff' } },
   { option: 'Попробуй еще', amount: 0, style: { backgroundColor: '#f16496', textColor: '#000000' } },
-  { option: '20 аморитов', amount: 20, style: { backgroundColor: '#856EC1', textColor: '#ffffff' } },
+  { option: '20 $AMOCOIN', amount: 20, style: { backgroundColor: '#856EC1', textColor: '#ffffff' } },
 ];
 
 const WheelOfFortune = () => {
@@ -143,7 +143,7 @@ const WheelOfFortune = () => {
     <div className="wheel-of-fortune">
       <img src={arrowLeft} alt="Назад" className="back-button" onClick={handleBack} />
       <h2>Крути колесо фортуны!</h2>
-      <h3>🪙 {amoritBalance} - Твой текущий баланс</h3>
+      <h3> {amoritBalance} - Твой текущий баланс</h3>
 
       <div className="wheel-container">
         <Wheel

@@ -41,7 +41,7 @@ const TapGame = ({ onBack }) => {
   };
 
   const handleWin = () => {
-    updateAmoritBalance(50); // Зачисляем 50 аморитов за 100 тапов
+    updateAmoritBalance(50); // Зачисляем 50 $AMOCOIN за 100 тапов
     triggerConfetti(); // Запуск анимации
   };
 
@@ -203,8 +203,8 @@ const TapGame = ({ onBack }) => {
   return (
     <div className="tap-game">
       <img src={arrowLeft} alt="Назад" className="back-button" onClick={onBack} />
-      <h2>Тапай по попке и&#160;зарабатывай&#160;амориты!</h2>
-      <h3>🪙 {amoritBalance} - Твой текущий баланс</h3>
+      <h2>Тапай по попке и&#160;зарабатывай&#160;$AMOCOIN!</h2>
+      <h3> {amoritBalance} - Твой текущий баланс</h3>
       <div className="canvas-container">
         <canvas ref={canvasRef} className="tap-canvas" onClick={handleTap} />
       </div>
@@ -214,7 +214,7 @@ const TapGame = ({ onBack }) => {
         <span>Ты натапал {100 - tapsRemaining} из 100!</span>
       </div>
 
-      {!isSessionActive && hasWon && <h4>Поздравляем! Ты заработал 50 аморитов за свои 100 тапов!</h4>}
+      {!isSessionActive && hasWon && <h4>Поздравляем! Ты заработал 50 $AMOCOIN за свои 100 тапов!</h4>}
 
       {isCooldownActive && (
         <>

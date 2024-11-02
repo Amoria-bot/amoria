@@ -32,7 +32,7 @@ const StarPurchase = () => {
   // 3. Обрабатываем покупку
   const handlePurchase = () => {
     if (selectedAmount && !isPurchaseInProgress) {
-      console.log(`Покупка ${selectedAmount} аморитов начата`);
+      console.log(`Покупка ${selectedAmount} $AMOCOIN начата`);
       setIsPurchaseInProgress(true); // Блокируем повторную покупку
       updateAmoritBalance(selectedAmount); // Обновляем баланс
       setPaymentMethodVisible(true); // Переход на экран оплаты
@@ -73,19 +73,19 @@ const StarPurchase = () => {
 
   return (
     <div className="star-purchase">
-      <h2>Амориты</h2>
+      <h2>$AMOCOIN</h2>
       <p>
-        Амориты — внутренняя валюта Amoria, которую вы зарабатываете, играя и выполняя задания.
-        Тратьте амориты на общение с персонажами, открытие эксклюзивных фото и видео, а также доступ
+        $AMOCOIN — внутренняя валюта Amoria, которую вы зарабатываете, играя и выполняя задания.
+        Тратьте $AMOCOIN на общение с персонажами, открытие эксклюзивных фото и видео, а также доступ
         к премиум-контенту.
       </p>
 
       <h1>
-        {amoritBalance} <span className="amorit-icon">🪙</span>
+        {amoritBalance} <span className="amorit-icon"></span>
       </h1>
       <p>твой текущий баланс</p>
 
-      <h2>Пополнение баланса аморитов</h2>
+      <h2>Пополнение баланса $AMOCOIN</h2>
       <div className="amount-options">
         {starOptions.map((option, index) => (
           <div
@@ -96,7 +96,7 @@ const StarPurchase = () => {
             onClick={() => setSelectedAmount(option.amount)}
           >
             <span>
-              {option.amount} аморитов — {option.price}$
+              {option.amount} $AMOCOIN — {option.price}$
             </span>
           </div>
         ))}
@@ -104,9 +104,9 @@ const StarPurchase = () => {
 
       {selectedAmount && (
         <div className="purchase-section">
-          <h3>Выбранное количество: {selectedAmount} аморитов</h3>
+          <h3>Выбранное количество: {selectedAmount} $AMOCOIN</h3>
           <button className="purchase-button" onClick={handlePurchase}>
-            Купить амориты
+            Купить $AMOCOIN
           </button>
         </div>
       )}

@@ -35,7 +35,7 @@ const PaymentMethod = ({ onBack, selectedAmount, selectedPrice }) => {
       />
 
       <h2>Выбери способ оплаты</h2>
-      <h3>Твой заказ: {selectedAmount} аморитов — {selectedPrice}$</h3>
+      <h3>Твой заказ: {selectedAmount} $AMOCOIN — {selectedPrice}$</h3>
       <p>Ты можешь оплатить кредитной картой или&#160;криптовалютой:</p>
 
       <div className="method-options">

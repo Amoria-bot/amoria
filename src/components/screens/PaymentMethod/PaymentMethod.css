@@ -40,10 +40,7 @@
   background-color: #333; /* Цвет фона для опций */
   color: white;
   border-radius: 5px;
-  cursor: pointer;
   width: 100%; /* Ширина опций на всю ширину контейнера */
-  max-width: 300px; /* Максимальная ширина опций */
-  text-align: center; /* Центрируем текст */
 }
 
 .method-option.active {

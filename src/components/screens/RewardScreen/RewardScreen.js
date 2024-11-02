@@ -20,7 +20,7 @@ const RewardScreen = ({ streak, onClose }) => {
   // Логика расчёта награды в зависимости от стрика
   useEffect(() => {
     const initialBalance = parseInt(localStorage.getItem('amoritBalance'), 10) || 0;
-    console.log("Начальный баланс аморитов:", initialBalance); // Лог для начального баланса
+    console.log("Начальный баланс $AMOCOIN:", initialBalance); // Лог для начального баланса
 
     const calculatedReward = streak >= 10 ? 100 : streak * 10;
     setReward(calculatedReward); // Устанавливаем награду
@@ -46,8 +46,8 @@ const RewardScreen = ({ streak, onClose }) => {
       <img src={rewardImage} alt="Reward" className="reward-image" />
       <h1>ДЕНЬ {streak}</h1>
       <div className="reward-info">
-        <p>Ты получил {reward} аморитов за свой {streak}-й день!</p>
-        <p>Вернись завтра, чтобы получить ещё больше аморитов!</p>
+        <p>Ты получил {reward} $AMOCOIN<br/>за свой {streak}-й день!</p>
+        <p>Вернись завтра,<br/>чтобы получить ещё больше!</p>
       </div>
       <div className="continue-button">
         <Button onClick={onClose} text="Продолжить" />

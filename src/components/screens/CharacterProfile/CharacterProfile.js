@@ -107,7 +107,7 @@ function CharacterProfile() {
       setShowGalleryPopup(true);
       return;
     }
-    if (balance >= 50) { // Списываем 50 аморитов для изображения
+    if (balance >= 50) { // Списываем 50 $AMOCOIN для изображения
       setSelectedPremiumImage(img);
       setCurrentIndex(index);
       setShowPremiumConfirmUnlockPopup(true);
@@ -262,7 +262,7 @@ function CharacterProfile() {
 
       {!isUnlocked && character.isPremium ? (
         <button className="unlock-button" onClick={handleUnlock}>
-          Разблокировать чат с {character.name} за 1000 🪙
+          Разблокировать чат за 1000 $AMOCOIN
         </button>
       ) : (
         <button className="chat-button" onClick={() => navigate(`/chat/${character.slug}`)}>
@@ -287,11 +287,11 @@ function CharacterProfile() {
         <div className="balance-popup-overlay" onClick={closePopup}>
           <div className="balance-popup-content" onClick={(e) => e.stopPropagation()}>
             <button className="close-button" onClick={closePopup}>×</button>
-            <h3>Недостаточно аморитов!</h3>
-            <p>Ваш баланс: {balance} 🪙</p>
-            <p>У вас недостаточно аморитов для разблокировки элемента.</p>
+            <h3>Недостаточно $AMOCOIN!</h3>
+            <p>Ваш баланс: {balance}</p>
+            <p>У вас недостаточно $AMOCOIN для разблокировки элемента.</p>
             <button onClick={handleBuyAmorites}>
-              Купить Амориты
+              Купить $AMOCOIN
             </button>
           </div>
         </div>
@@ -302,8 +302,8 @@ function CharacterProfile() {
           <div className="balance-popup-content" onClick={(e) => e.stopPropagation()}>
             <button className="close-button" onClick={closePopup}>×</button>
             <h3>Разблокировка чата с премиум-персонажем</h3>
-            <p>Ваш текущий баланс аморитов: {balance} 🪙</p>
-            <p>Списываем 1000 аморитов за разблокировку чата с {character.name}.</p>
+            <p>Ваш текущий баланс $AMOCOIN: {balance}</p>
+            <p>Списываем 1000 $AMOCOIN за разблокировку чата с {character.name}.</p>
             <button onClick={confirmUnlock}>Продолжить</button>
           </div>
         </div>
@@ -314,8 +314,8 @@ function CharacterProfile() {
           <div className="balance-popup-content" onClick={(e) => e.stopPropagation()}>
             <button className="close-button" onClick={closePopup}>×</button>
             <h3>Разблокировка премиум-изображения</h3>
-            <p>Ваш текущий баланс аморитов: {balance} 🪙</p>
-            <p>Списываем 50 аморитов за разблокировку изображения.</p>
+            <p>Ваш текущий баланс $AMOCOIN: {balance}</p>
+            <p>Списываем 50 $AMOCOIN за разблокировку изображения.</p>
             <button onClick={confirmPremiumUnlock}>Продолжить</button>
           </div>
         </div>

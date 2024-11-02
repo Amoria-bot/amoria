@@ -22,7 +22,7 @@ function BottomNavbar() {
     { label: 'Чаты', icon: chatIcon, activeIcon: chatIconActive, route: '/chats' },
     { label: 'Игры', icon: gamesIcon, activeIcon: gamesIconActive, route: '/games-and-tasks' },
     { label: 'Персонажи', icon: charactersIcon, activeIcon: charactersIconActive, route: '/characters' },
-    { label: 'Амориты', icon: starsIcon, activeIcon: starsIconActive, route: '/star-purchase' },
+    { label: 'Баланс', icon: starsIcon, activeIcon: starsIconActive, route: '/star-purchase' },
     { label: 'Друзья', icon: friendsIcon, activeIcon: friendsIconActive, route: '/friends' },
   ];
 

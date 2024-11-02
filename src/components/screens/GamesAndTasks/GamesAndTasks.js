@@ -92,30 +92,30 @@ const GamesAndTasks = () => {
 
   return (
     <div className="games-and-tasks">
-      <h2>Играй и зарабатывай амориты!</h2>
+      <h2>Играй и зарабатывай $AMOCOIN!</h2>
 
       <div className="game-card">
         <img src={tapIcon} alt="Wheel of Fortune" className="tap-icon" />
-        <h2>Тапай по попке и&#160;зарабатывай&#160;амориты!</h2>
-        <p>+50 аморитов ежедневно</p>
+        <h2>Тапай по попке и&#160;зарабатывай&#160;$AMOCOIN!</h2>
+        <p>+50 $AMOCOIN ежедневно</p>
         <button onClick={() => setTapGameActive(true)}>Играть</button>
       </div>
 
       <div className="game-card">
         <img src={wheelIcon} alt="Tap Game" className="wheel-icon" />
         <h2>Крути колесо фортуны и&#160;выиграй!</h2>
-        <p>+50 аморитов ежедневно</p>
+        <p>+50 $AMOCOIN ежедневно</p>
         <button onClick={() => navigate('/wheel-of-fortune')}>Играть</button>
       </div>
 
-      <h2>Подпишись на наши соцсети и&#160;получи&#160;+100 аморитов!</h2>
+      <h2>Подпишись на наши соцсети и&#160;получи&#160;+100 $AMOCOIN!</h2>
 
       <div className="social-task">
         <div className="task-content">
           <img src={xIcon} alt="X Icon" className="social-icon" />
           <div className="task-text">
             <span>X</span>
-            <span className="reward-text">+100 аморитов</span>
+            <span className="reward-text">+100 $AMOCOIN</span>
           </div>
         </div>
         <button
@@ -136,7 +136,7 @@ const GamesAndTasks = () => {
           <img src={telegramIcon} alt="Telegram Icon" className="social-icon" />
           <div className="task-text">
             <span>Telegram</span>
-            <span className="reward-text">+100 аморитов</span>
+            <span className="reward-text">+100 $AMOCOIN</span>
           </div>
         </div>
         <button

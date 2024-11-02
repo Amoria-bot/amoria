@@ -7,13 +7,13 @@ import ConfettiAnimation from '../../animations/ConfettiAnimation'; // Импо�
 
 // Массив с данными и весами для каждого сектора
 const data = [
-  { option: '10 аморитов', amount: 10, weight: 30, style: { backgroundColor: '#A084E8', textColor: '#ffffff' } },
-  { option: '20 аморитов', amount: 20, weight: 15, style: { backgroundColor: '#856EC1', textColor: '#ffffff' } },
-  { option: '50 аморитов', amount: 50, weight: 15, style: { backgroundColor: '#42f554', textColor: '#000000' } },
-  { option: '100 аморитов', amount: 100, weight: 10, style: { backgroundColor: '#4EBFD6', textColor: '#ffffff' } },
-  { option: '150 аморитов', amount: 150, weight: 5, style: { backgroundColor: '#2FA26B', textColor: '#ffffff' } },
-  { option: '300 аморитов', amount: 300, weight: 2, style: { backgroundColor: '#CB5252', textColor: '#ffffff' } },
-  { option: '500 аморитов', amount: 500, weight: 2, style: { backgroundColor: '#F8D312', textColor: '#000000' } },
+  { option: '10 $AMOCOIN', amount: 10, weight: 30, style: { backgroundColor: '#A084E8', textColor: '#ffffff' } },
+  { option: '20 $AMOCOIN', amount: 20, weight: 15, style: { backgroundColor: '#856EC1', textColor: '#ffffff' } },
+  { option: '50 $AMOCOIN', amount: 50, weight: 15, style: { backgroundColor: '#42f554', textColor: '#000000' } },
+  { option: '100 $AMOCOIN', amount: 100, weight: 10, style: { backgroundColor: '#4EBFD6', textColor: '#ffffff' } },
+  { option: '150 $AMOCOIN', amount: 150, weight: 5, style: { backgroundColor: '#2FA26B', textColor: '#ffffff' } },
+  { option: '300 $AMOCOIN', amount: 300, weight: 2, style: { backgroundColor: '#CB5252', textColor: '#ffffff' } },
+  { option: '500 $AMOCOIN', amount: 500, weight: 2, style: { backgroundColor: '#F8D312', textColor: '#000000' } },
   { option: 'Попробуй еще', amount: 0, weight: 21, style: { backgroundColor: '#f16496', textColor: '#000000' } },
 ];
 
@@ -156,7 +156,7 @@ const WheelOfFortune = () => {
     <div className="wheel-of-fortune">
       <img src={arrowLeft} alt="Назад" className="back-button" onClick={handleBack} />
       <h2>Крути колесо фортуны!</h2>
-      <h3>🪙 {amoritBalance} - Твой текущий баланс</h3>
+      <h3> {amoritBalance} - Твой текущий баланс</h3>
 
       <div className="wheel-container">
         <Wheel
