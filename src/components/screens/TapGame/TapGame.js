@@ -112,15 +112,17 @@ const TapGame = ({ onBack }) => {
             clearInterval(interval);
             resetGame();
             setIsCooldownActive(false);
+            setIsSessionActive(true); // Возвращаем активное состояние
             return 8 * 3600;
           }
           return prev - 1;
         });
       }, 1000);
-
+  
       return () => clearInterval(interval);
     }
   }, [isCooldownActive, cooldownTime, resetGame]);
+  
 
   const handleTap = (e) => {
     if (isSessionActive && tapsRemaining > 0) {
@@ -204,7 +206,7 @@ const TapGame = ({ onBack }) => {
     <div className="tap-game">
       <img src={arrowLeft} alt="Назад" className="back-button" onClick={onBack} />
       <h2>Тапай по попке и&#160;зарабатывай&#160;$AMOCOIN!</h2>
-      <h3> {amoritBalance} - Твой текущий баланс</h3>
+      <h3> {amoritBalance} - Твой текущий баланс $AMOCOIN</h3>
       <div className="canvas-container">
         <canvas ref={canvasRef} className="tap-canvas" onClick={handleTap} />
       </div>

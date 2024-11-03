@@ -156,7 +156,7 @@ const WheelOfFortune = () => {
     <div className="wheel-of-fortune">
       <img src={arrowLeft} alt="Назад" className="back-button" onClick={handleBack} />
       <h2>Крути колесо фортуны!</h2>
-      <h3> {amoritBalance} - Твой текущий баланс</h3>
+      <h3> {amoritBalance} - Твой текущий баланс $AMOCOIN</h3>
 
       <div className="wheel-container">
         <Wheel
