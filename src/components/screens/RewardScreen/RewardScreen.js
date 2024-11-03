@@ -46,7 +46,7 @@ const RewardScreen = ({ streak, onClose }) => {
       <img src={rewardImage} alt="Reward" className="reward-image" />
       <h1>ДЕНЬ {streak}</h1>
       <div className="reward-info">
-        <p>Ты получил {reward} $AMOCOIN<br/>за свой {streak}-й день!</p>
+        <p>Ты получил <strong>{reward} $AMOCOIN</strong><br/>за свой {streak}-й день!</p>
         <p>Вернись завтра,<br/>чтобы получить ещё больше!</p>
       </div>
       <div className="continue-button">

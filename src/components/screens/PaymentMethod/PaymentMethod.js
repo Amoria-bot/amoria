@@ -4,7 +4,7 @@ import './PaymentMethod.css'; // Импорт стилей
 import ThankYou from '../ThankYou/ThankYou'; // Импортируем экран благодарности
 import arrowLeft from '../../../assets/icon/arrow-left.svg'; // Импорт иконки
 
-const PaymentMethod = ({ onBack, selectedAmount, selectedPrice }) => {
+const PaymentMethod = ({ onBack, selectedAmount, selectedPrice, isSubscription, subscriptionPrice, subscriptionDuration }) => {
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [isThankYouVisible, setThankYouVisible] = useState(false);
 
@@ -16,10 +16,11 @@ const PaymentMethod = ({ onBack, selectedAmount, selectedPrice }) => {
 
   if (isThankYouVisible) {
     return (
-      <ThankYou 
-        amount={selectedAmount} 
-        balance={156} 
-        onContinue={() => console.log('Продолжить')} 
+      <ThankYou
+        amount={isSubscription ? null : selectedAmount}
+        isSubscription={isSubscription} 
+        subscriptionDuration={isSubscription ? subscriptionDuration : null} 
+        onContinue={() => console.log('Продолжить')}
       />
     );
   }
@@ -35,7 +36,11 @@ const PaymentMethod = ({ onBack, selectedAmount, selectedPrice }) => {
       />
 
       <h2>Выбери способ оплаты</h2>
-      <h3>Твой заказ: {selectedAmount} $AMOCOIN — {selectedPrice}$</h3>
+      {isSubscription ? (
+        <h3>Твой заказ: Подписка на {subscriptionDuration} за {subscriptionPrice}</h3>
+      ) : (
+        <h3>Твой заказ: {selectedAmount} $AMOCOIN — {selectedPrice}$</h3>
+      )}
       <p>Ты можешь оплатить кредитной картой или&#160;криптовалютой:</p>
 
       <div className="method-options">

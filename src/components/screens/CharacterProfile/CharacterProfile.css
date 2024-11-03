@@ -62,6 +62,7 @@
   align-items: center;
   gap: 1.5rem; /* 24px */
   margin-bottom: 1.5rem; /* 24px отступ снизу */
+  margin-top: 1.5rem; /* 24px отступ сверху */
 }
 
 .like-button-container,
@@ -407,4 +408,9 @@ form .submit-button {
 
 .premium-gallery-image.unlocked {
   filter: none;
+}
+
+.subscription-link {
+  display: block;
+  width: 100%;
 }

@@ -8,7 +8,10 @@ import LikeIcon from '../../../assets/icon/like.svg';
 import DislikeIcon from '../../../assets/icon/dislike.svg';
 import arrowLeft from '../../../assets/icon/arrow-left.svg';
 import LockIcon from '../../../assets/icon/lock.svg'; // Импортируем иконку
+import SubscriptionUpgradeBadge from '../../common/SubscriptionUpgradeBadge/SubscriptionUpgradeBadge';
 import charactersData from '../../../data/characters.json';
+import { Link } from 'react-router-dom';
+
 
 // Получение и обновление баланса из localStorage с проверкой значения
 const getBalance = () => {
@@ -269,6 +272,10 @@ function CharacterProfile() {
           Открыть чат с {character.name}
         </button>
       )}
+      <Link to="/star-purchase" className="subscription-link">
+        <SubscriptionUpgradeBadge />
+      </Link>
+
 
       <div className="like-dislike-container">
         <div className={`like-button-container ${hasVoted ? 'disabled' : ''}`} onClick={handleLike}>

@@ -20,3 +20,17 @@
     font-size: 50px; /* Размер анимации */
   }
   
+  .thank-you {
+    background-image: url('../../../assets/images/thankyou-bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  .thank-you-icon {
+    display: block;
+    margin: 24px auto;
+    width: 96px; /* Укажите нужный размер */
+    height: 96px;
+  }
+  
