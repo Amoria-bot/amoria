@@ -35,8 +35,16 @@ const StarPurchase = () => {
       try {
         const parsedSubscription = JSON.parse(savedSubscription);
         if (parsedSubscription && parsedSubscription.endDate) {
-          console.log(`Подписка успешно загружена из localStorage:`, parsedSubscription);
-          setCurrentSubscription(parsedSubscription);
+          const subscriptionEndDate = new Date(parsedSubscription.endDate);
+          const currentDate = new Date();
+          if (subscriptionEndDate > currentDate) {
+            console.log(`Подписка успешно загружена из localStorage:`, parsedSubscription);
+            setCurrentSubscription(parsedSubscription);
+          } else {
+            console.warn('Подписка истекла. Удаляем просроченную подписку из localStorage.');
+            localStorage.removeItem('activeSubscription');
+            setCurrentSubscription(null);
+          }
         } else {
           console.warn('Неполные данные о подписке в localStorage, устанавливаем значение null.');
           setCurrentSubscription(null);
@@ -50,8 +58,6 @@ const StarPurchase = () => {
     }
   }, []);
   
-  
-
   const updateAmoritBalance = (amount) => {
     const newBalance = amoritBalance + amount;
     console.log(`Пополнение: ${amount}, Новый баланс: ${newBalance}`);
@@ -69,8 +75,26 @@ const StarPurchase = () => {
   };
 
   const handleSubscriptionPurchase = () => {
+    console.log('Начало покупки подписки');
     setSubscriptionFlow(true);
     setPaymentMethodVisible(true);
+  };
+
+  const finalizeSubscriptionPurchase = () => {
+    // Сохранение данных о подписке в localStorage
+    const endDate = selectedSubscription === 'monthly' ? 
+      new Date(new Date().setMonth(new Date().getMonth() + 1)) : 
+      new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+    const subscriptionData = {
+      type: selectedSubscription,
+      endDate: endDate.toISOString()
+    };
+    console.log('Сохранение подписки в localStorage:', subscriptionData);
+    localStorage.setItem('activeSubscription', JSON.stringify(subscriptionData));
+    setCurrentSubscription(subscriptionData);
+    console.log('Текущая подписка после сохранения:', subscriptionData);
+    setPaymentMethodVisible(false);
+    setSubscriptionFlow(false);
   };
 
   const handleBack = () => {
@@ -86,6 +110,12 @@ const StarPurchase = () => {
     localStorage.setItem('amoritBalance', 0);
   };
 
+  const handleResetSubscription = () => {
+    console.log('Сброс подписки');
+    setCurrentSubscription(null);
+    localStorage.removeItem('activeSubscription');
+  };
+
   const starOptions = [
     { amount: 100, price: 0.99 },
     { amount: 500, price: 4.49 },
@@ -95,6 +125,7 @@ const StarPurchase = () => {
   ];
 
   const handleSubscriptionSelect = (type) => {
+    console.log(`Выбор подписки: ${type}`);
     setSelectedSubscription(type);
   };
 
@@ -109,6 +140,7 @@ const StarPurchase = () => {
         isSubscription={isSubscriptionFlow}
         subscriptionPrice={subscriptionPrice}
         subscriptionDuration={selectedSubscription === 'monthly' ? '1 месяц' : '1 год'}
+        onSuccess={finalizeSubscriptionPurchase}
       />
     );
   }
@@ -128,18 +160,9 @@ const StarPurchase = () => {
       <h1>
         {amoritBalance} <span className="amorit-icon"></span>
       </h1>
-      <p>твой текущий баланс</p>
+      <p>твой текущий баланс $AMOCOIN</p>
 
-      {currentSubscription && (
-        <div className="current-subscription">
-          <h2>Текущая подписка:</h2>
-          <p>
-            Подписка на {currentSubscription.type} до {currentSubscription.endDate}
-          </p>
-        </div>
-      )}
-
-      <h2>Пополнение баланса $AMOCOIN</h2>
+      <h2>Пополнение баланса</h2>
       <div className="amount-options">
         {starOptions.map((option, index) => (
           <div
@@ -169,8 +192,21 @@ const StarPurchase = () => {
         Сбросить баланс
       </button>
 
+      <button className="reset-button" onClick={handleResetSubscription}>
+        Сбросить подписку
+      </button>
+
       <div className="subscription-container">
         <h2>Подписка на премиум</h2>
+
+        {currentSubscription && (
+        <div className="current-subscription">
+          <h2>Текущая подписка:</h2>
+          <p>
+            Подписка на {currentSubscription.type === 'monthly' ? 'месяц' : 'год'} до {new Date(currentSubscription.endDate).toLocaleDateString()}
+          </p>
+        </div>
+      )}
 
         <div className="subscription-options">
           <div
@@ -190,7 +226,7 @@ const StarPurchase = () => {
           >
             <div className={`radio-button ${selectedSubscription === 'yearly' ? 'active' : 'inactive'}`}></div>
             <div className="subscription-details">
-              <div className="duration2">1 Год</div>
+              <div className="duration">1 Год</div>
               <div className="price">$24</div>
               <div className="monthly-rate">$2 / месяц</div>
             </div>
@@ -222,7 +258,7 @@ const StarPurchase = () => {
             <img src={PremiumIcon3} alt="Reward Boost" className="benefit-icon RewardBoost" />
             <div className="benefit-text">
               <strong>Увеличенные награды за задания</strong>
-              <p>Получайте больше $AMOCOIN за выполнение ежедневных и специальных заданий. Важно для будущего Airdrop.</p>
+              <p>Получайте больше $AMOCOIN за выполнение ежедневных и специальных заданий.</p>
             </div>
           </div>
           <div className="benefit">

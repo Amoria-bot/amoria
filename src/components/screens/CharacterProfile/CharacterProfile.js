@@ -12,13 +12,13 @@ import SubscriptionUpgradeBadge from '../../common/SubscriptionUpgradeBadge/Subs
 import charactersData from '../../../data/characters.json';
 import { Link } from 'react-router-dom';
 
-
 // Получение и обновление баланса из localStorage с проверкой значения
 const getBalance = () => {
   const storedBalance = parseInt(localStorage.getItem('amoritBalance'), 10);
   console.log("Считываем баланс из localStorage:", storedBalance);
   return isNaN(storedBalance) ? 0 : storedBalance; // Если значение NaN, возвращаем 0
 };
+
 const updateBalance = (newBalance) => {
   localStorage.setItem('amoritBalance', newBalance);
   console.log("Обновляем баланс в localStorage:", newBalance);
@@ -61,6 +61,7 @@ function CharacterProfile() {
   const [showPremiumConfirmUnlockPopup, setShowPremiumConfirmUnlockPopup] = useState(false);
   const [selectedPremiumImage, setSelectedPremiumImage] = useState(null);
   const [unlockedPremiumImages, setUnlockedPremiumImages] = useState([]);
+  const [hasSubscription, setHasSubscription] = useState(false); // Проверка подписки
 
   useEffect(() => {
     const unlockedCharacters = JSON.parse(localStorage.getItem('unlockedCharacters')) || [];
@@ -77,6 +78,27 @@ function CharacterProfile() {
     if (storedComments) setComments(JSON.parse(storedComments));
 
     setBalance(getBalance()); // Установка баланса при загрузке компонента
+
+    // Проверка подписки
+    const savedSubscription = JSON.parse(localStorage.getItem('activeSubscription'));
+    if (savedSubscription) {
+      if (savedSubscription.endDate) {
+        const subscriptionEndDate = new Date(savedSubscription.endDate.split('.').reverse().join('-')); // Преобразуем формат даты
+        const currentDate = new Date();
+        console.log("Дата завершения подписки:", subscriptionEndDate);
+        console.log("Текущая дата:", currentDate);
+        if (subscriptionEndDate > currentDate) {
+          setHasSubscription(true);
+        } else {
+          localStorage.removeItem('activeSubscription');
+          setHasSubscription(false);
+        }
+      } else {
+        setHasSubscription(false);
+      }
+    } else {
+      setHasSubscription(false);
+    }
 
     // Получение разблокированных премиум-изображений из localStorage
     setUnlockedPremiumImages(getUnlockedPremiumImages(character.id));
@@ -105,7 +127,6 @@ function CharacterProfile() {
 
   const handlePremiumUnlock = (img, index) => {
     if (unlockedPremiumImages.includes(index)) {
-      // Если изображение уже разблокировано, сразу показываем попап
       setPopupImage(img.src || img.webp || img.jpg);
       setShowGalleryPopup(true);
       return;
@@ -124,11 +145,8 @@ function CharacterProfile() {
     updateBalance(newBalance);
     setBalance(newBalance);
     setShowPremiumConfirmUnlockPopup(false);
-
-    // Сохраняем разблокированное изображение в localStorage и обновляем стейт
     updateUnlockedPremiumImages(character.id, currentIndex);
     setUnlockedPremiumImages((prev) => [...prev, currentIndex]);
-
     setPopupImage(selectedPremiumImage.src || selectedPremiumImage.webp || selectedPremiumImage.jpg);
     setShowGalleryPopup(true);
   };
@@ -139,7 +157,7 @@ function CharacterProfile() {
     setIsUnlocked(false);
     setUnlockedPremiumImages([]); // Сброс состояния разблокированных изображений
   };
-  
+
   const closePopup = () => {
     setShowBalancePopup(false);
     setShowConfirmUnlockPopup(false);
@@ -226,6 +244,13 @@ function CharacterProfile() {
         <h2>{character.name}</h2>
         <p>{character.fullDescription || character.description}</p>
 
+        {/* Отображаем бейдж подписки, если подписка отсутствует */}
+        {!hasSubscription && (
+          <div>
+            <SubscriptionUpgradeBadge />
+          </div>
+        )}
+
         <h3>Галерея</h3>
         <div className="gallery">
           {character.gallery.map((img, index) => (
@@ -263,108 +288,107 @@ function CharacterProfile() {
           ))}
         </div>
 
-      {!isUnlocked && character.isPremium ? (
-        <button className="unlock-button" onClick={handleUnlock}>
-          Разблокировать чат за 1000 $AMOCOIN
+        {!isUnlocked && character.isPremium ? (
+          <button className="unlock-button" onClick={handleUnlock}>
+            Разблокировать чат за 1000 $AMOCOIN
+          </button>
+        ) : (
+          <button className="chat-button" onClick={() => navigate(`/chat/${character.slug}`)}>
+            Открыть чат с {character.name}
+          </button>
+        )}
+        <Link to="/star-purchase" className="subscription-link">
+          <SubscriptionUpgradeBadge />
+        </Link>
+
+        <div className="like-dislike-container">
+          <div className={`like-button-container ${hasVoted ? 'disabled' : ''}`} onClick={handleLike}>
+            <img src={LikeIcon} alt="Like" />
+            <span>{likes}</span>
+          </div>
+
+          <div className={`dislike-button-container ${hasVoted ? 'disabled' : ''}`} onClick={handleDislike}>
+            <img src={DislikeIcon} alt="Dislike" />
+            <span>{dislikes}</span>
+          </div>
+        </div>
+        {hasVoted && <span className="vote-message">Вы уже голосовали!</span>}
+
+        {showBalancePopup && (
+          <div className="balance-popup-overlay" onClick={closePopup}>
+            <div className="balance-popup-content" onClick={(e) => e.stopPropagation()}>
+              <button className="close-button" onClick={closePopup}>×</button>
+              <h3>Недостаточно $AMOCOIN!</h3>
+              <p>Ваш баланс: {balance}</p>
+              <p>У вас недостаточно $AMOCOIN для разблокировки элемента.</p>
+              <button onClick={handleBuyAmorites}>
+                Купить $AMOCOIN
+              </button>
+            </div>
+          </div>
+        )}
+
+        {showConfirmUnlockPopup && (
+          <div className="balance-popup-overlay" onClick={closePopup}>
+            <div className="balance-popup-content" onClick={(e) => e.stopPropagation()}>
+              <button className="close-button" onClick={closePopup}>×</button>
+              <h3>Разблокировка чата с премиум-персонажем</h3>
+              <p>Ваш текущий баланс $AMOCOIN: {balance}</p>
+              <p>Списываем 1000 $AMOCOIN за разблокировку чата с {character.name}.</p>
+              <button onClick={confirmUnlock}>Продолжить</button>
+            </div>
+          </div>
+        )}
+
+        {showPremiumConfirmUnlockPopup && (
+          <div className="balance-popup-overlay" onClick={closePopup}>
+            <div className="balance-popup-content" onClick={(e) => e.stopPropagation()}>
+              <button className="close-button" onClick={closePopup}>×</button>
+              <h3>Разблокировка премиум-изображения</h3>
+              <p>Ваш текущий баланс $AMOCOIN: {balance}</p>
+              <p>Списываем 50 $AMOCOIN за разблокировку изображения.</p>
+              <button onClick={confirmPremiumUnlock}>Продолжить</button>
+            </div>
+          </div>
+        )}
+
+        {showGalleryPopup && (
+          <div className="popup" {...swipeHandlers} onClick={(e) => e.stopPropagation()}>
+            <div className="popup-content">
+              <button className="close-button" onClick={closeImagePopup}>×</button>
+              <button className="prev-button" onClick={(e) => { e.stopPropagation(); handlePrevImage(); }}>←</button>
+              <img src={popupImage} alt="Full size" />
+              <button className="next-button" onClick={(e) => { e.stopPropagation(); handleNextImage(); }}>→</button>
+            </div>
+          </div>
+        )}
+
+        <form onSubmit={handleCommentSubmit}>
+          <div className="comment-input-container">
+            <textarea
+              className="comment-input"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              placeholder="Оставьте комментарий"
+            />
+          </div>
+          {error && <p className="error-message">{error}</p>}
+          <button type="submit" className="submit-button">Отправить</button>
+        </form>
+
+        <ul className="comments">
+          {comments.map((comm, index) => (
+            <li key={index} className="comment-container">
+              <span className="comment-username">Пользователь {index + 1}</span>
+              <p>{comm}</p>
+            </li>
+          ))}
+        </ul>
+
+        {/* Кнопка для сброса разблокированных чатов */}
+        <button className="reset-button" onClick={resetUnlockedChats}>
+          Сбросить разблокировки
         </button>
-      ) : (
-        <button className="chat-button" onClick={() => navigate(`/chat/${character.slug}`)}>
-          Открыть чат с {character.name}
-        </button>
-      )}
-      <Link to="/star-purchase" className="subscription-link">
-        <SubscriptionUpgradeBadge />
-      </Link>
-
-
-      <div className="like-dislike-container">
-        <div className={`like-button-container ${hasVoted ? 'disabled' : ''}`} onClick={handleLike}>
-          <img src={LikeIcon} alt="Like" />
-          <span>{likes}</span>
-        </div>
-
-        <div className={`dislike-button-container ${hasVoted ? 'disabled' : ''}`} onClick={handleDislike}>
-          <img src={DislikeIcon} alt="Dislike" />
-          <span>{dislikes}</span>
-        </div>
-      </div>
-      {hasVoted && <span className="vote-message">Вы уже голосовали!</span>}
-
-      {showBalancePopup && (
-        <div className="balance-popup-overlay" onClick={closePopup}>
-          <div className="balance-popup-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={closePopup}>×</button>
-            <h3>Недостаточно $AMOCOIN!</h3>
-            <p>Ваш баланс: {balance}</p>
-            <p>У вас недостаточно $AMOCOIN для разблокировки элемента.</p>
-            <button onClick={handleBuyAmorites}>
-              Купить $AMOCOIN
-            </button>
-          </div>
-        </div>
-      )}
-
-      {showConfirmUnlockPopup && (
-        <div className="balance-popup-overlay" onClick={closePopup}>
-          <div className="balance-popup-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={closePopup}>×</button>
-            <h3>Разблокировка чата с премиум-персонажем</h3>
-            <p>Ваш текущий баланс $AMOCOIN: {balance}</p>
-            <p>Списываем 1000 $AMOCOIN за разблокировку чата с {character.name}.</p>
-            <button onClick={confirmUnlock}>Продолжить</button>
-          </div>
-        </div>
-      )}
-
-      {showPremiumConfirmUnlockPopup && (
-        <div className="balance-popup-overlay" onClick={closePopup}>
-          <div className="balance-popup-content" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={closePopup}>×</button>
-            <h3>Разблокировка премиум-изображения</h3>
-            <p>Ваш текущий баланс $AMOCOIN: {balance}</p>
-            <p>Списываем 50 $AMOCOIN за разблокировку изображения.</p>
-            <button onClick={confirmPremiumUnlock}>Продолжить</button>
-          </div>
-        </div>
-      )}
-
-      {showGalleryPopup && (
-        <div className="popup" {...swipeHandlers} onClick={(e) => e.stopPropagation()}>
-          <div className="popup-content">
-            <button className="close-button" onClick={closeImagePopup}>×</button>
-            <button className="prev-button" onClick={(e) => { e.stopPropagation(); handlePrevImage(); }}>←</button>
-            <img src={popupImage} alt="Full size" />
-            <button className="next-button" onClick={(e) => { e.stopPropagation(); handleNextImage(); }}>→</button>
-          </div>
-        </div>
-      )}
-
-      <form onSubmit={handleCommentSubmit}>
-        <div className="comment-input-container">
-          <textarea
-            className="comment-input"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            placeholder="Оставьте комментарий"
-          />
-        </div>
-        {error && <p className="error-message">{error}</p>}
-        <button type="submit" className="submit-button">Отправить</button>
-      </form>
-
-      <ul className="comments">
-        {comments.map((comm, index) => (
-          <li key={index} className="comment-container">
-            <span className="comment-username">Пользователь {index + 1}</span>
-            <p>{comm}</p>
-          </li>
-        ))}
-      </ul>
-
-      {/* Кнопка для сброса разблокированных чатов */}
-      <button className="reset-button" onClick={resetUnlockedChats}>
-        Сбросить разблокировки
-      </button>
       </div>
     </>
   );
