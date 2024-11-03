@@ -274,3 +274,52 @@ input:focus, textarea:focus {
   margin: 10px 0;
   font-weight: 400;
 }
+
+/* Контейнер для попапа ограниченного доступа */
+.access-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.access-popup .access-popup-content {
+  background-color: #303030;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 90%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.access-popup .close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.access-popup-content h3 {
+  text-align: center;
+  color: #ffffff;
+}
+
+.access-popup-content p {
+  text-align: center;
+  color: #cccccc;
+}
+
+.access-popup-content button:hover {
+  background-color: #0056b3;
+}

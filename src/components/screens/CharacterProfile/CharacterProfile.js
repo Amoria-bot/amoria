@@ -116,14 +116,18 @@ function CharacterProfile() {
     const newBalance = balance - 1000;
     updateBalance(newBalance);
     setBalance(newBalance);
-
-    const unlockedCharacters = JSON.parse(localStorage.getItem('unlockedCharacters')) || [];
-    unlockedCharacters.push(character.id);
-    localStorage.setItem('unlockedCharacters', JSON.stringify(unlockedCharacters));
-
+  
+    // Добавляем ID персонажа в список unlockedChats
+    const unlockedChats = JSON.parse(localStorage.getItem('unlockedChats')) || [];
+    if (!unlockedChats.includes(character.id)) {
+      unlockedChats.push(character.id);
+      localStorage.setItem('unlockedChats', JSON.stringify(unlockedChats));
+    }
+  
     setIsUnlocked(true);
     setShowConfirmUnlockPopup(false);
   };
+  
 
   const handlePremiumUnlock = (img, index) => {
     if (unlockedPremiumImages.includes(index)) {

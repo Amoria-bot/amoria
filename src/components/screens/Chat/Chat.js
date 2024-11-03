@@ -7,8 +7,8 @@ import { useStatus } from '../../../context/StatusContext';
 import SendIcon from '../../../assets/icon/send.svg';
 import CameraIcon from '../../../assets/icon/camera.svg';
 import MoreIcon from '../../../assets/icon/more.svg';
-import arrowLeft from '../../../assets/icon/arrow-left.svg'; // Импорт иконки
-import charactersData from '../../../data/characters.json'; // Импорт JSON с данными персонажей
+import arrowLeft from '../../../assets/icon/arrow-left.svg';
+import charactersData from '../../../data/characters.json';
 
 const randomReplies = [
   "Прекрасный день для разговора!",
@@ -22,19 +22,44 @@ function Chat() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const statuses = useStatus();
-  const character = charactersData.find((char) => char.slug === slug); // Ищем персонажа по slug
+  const character = charactersData.find((char) => char.slug === slug);
 
   const [messages, setMessages] = useState(() => {
     const savedMessages = localStorage.getItem(`chat_${slug}`);
     return savedMessages ? JSON.parse(savedMessages) : [];
   });
-
   const [input, setInput] = useState('');
   const [popupImage, setPopupImage] = useState(null);
   const [isTyping, setIsTyping] = useState(false);
   const [isOnline, setIsOnline] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAccessRestricted, setIsAccessRestricted] = useState(false);
+
   const messageEndRef = useRef(null);
+
+  useEffect(() => {
+    const checkAccess = () => {
+      const savedSubscription = JSON.parse(localStorage.getItem('activeSubscription'));
+      const unlockedChats = JSON.parse(localStorage.getItem('unlockedChats')) || [];
+      const hasSubscription = savedSubscription && new Date(savedSubscription.endDate) > new Date();
+  
+      console.log("Проверка доступа к чату:");
+      console.log("character.isPremium:", character.isPremium);
+      console.log("hasSubscription:", hasSubscription);
+      console.log("unlockedChats:", unlockedChats);
+  
+      if (character.isPremium && !hasSubscription && !unlockedChats.includes(character.id)) {
+        console.log("Доступ к чату ограничен.");
+        setIsAccessRestricted(true);
+      } else {
+        console.log("Доступ к чату разрешен.");
+        setIsAccessRestricted(false);
+      }
+    };
+  
+    checkAccess();
+  }, [character]);
+  
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -97,7 +122,7 @@ function Chat() {
 
   const handleSend = (e) => {
     e.preventDefault();
-    if (!input.trim()) return;
+    if (!input.trim() || isAccessRestricted) return;
 
     const newMessage = {
       sender: 'user',
@@ -137,7 +162,7 @@ function Chat() {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (!file) return;
+    if (!file || isAccessRestricted) return;
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -157,11 +182,8 @@ function Chat() {
   };
 
   const handleImageClick = (image) => setPopupImage(image);
-
   const closePopup = () => setPopupImage(null);
-
   const handleBack = () => navigate(-1);
-
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   const clearChatHistory = () => {
@@ -172,10 +194,7 @@ function Chat() {
 
   if (!character) return <p>Персонаж не найден!</p>;
 
-  const avatarSrc =
-    character.avatar ||
-    character.fallbackAvatar;
-
+  const avatarSrc = character.avatar || character.fallbackAvatar;
   const characterStatus = isTyping || isOnline ? 'online' : statuses[character.slug] || 'offline';
 
   return (
@@ -222,6 +241,15 @@ function Chat() {
         )}
       </div>
 
+      {isAccessRestricted && (
+        <div className="access-popup">
+          <div className="access-popup-content">
+            <p>Доступ к этому чату ограничен. Активируйте подписку или разблокируйте чат за AMOCOIN.</p>
+            <button onClick={() => navigate('/star-purchase')}>Пополнить баланс</button>
+          </div>
+        </div>
+      )}
+
       <div className="messages">{renderMessages()}</div>
 
       <div className="message-input-wrapper">
@@ -233,15 +261,16 @@ function Chat() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Введите сообщение..."
               className="message-input"
+              disabled={isAccessRestricted}
             />
 
             <label className="file-label">
-              <input type="file" style={{ display: 'none' }} onChange={handleFileChange} />
+              <input type="file" style={{ display: 'none' }} onChange={handleFileChange} disabled={isAccessRestricted} />
               <img src={CameraIcon} alt="Attach" className="input-icon" />
             </label>
           </div>
 
-          <button type="submit" className="send-button">
+          <button type="submit" className="send-button" disabled={isAccessRestricted}>
             <img src={SendIcon} alt="Отправить" className="send-icon" />
           </button>
         </form>
