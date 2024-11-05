@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { sequelize, User, Subscription, Transaction, Chat } = require('./models/index'); // Импортируем sequelize и модели из index.js
+const { sequelize, User, Subscription, Transaction, Chat, AmocoinTransaction, AmocoinBalance, TapGameProgress, FortuneWheelProgress } = require('./models/index'); // Импортируем sequelize и модели из index.js
 
 async function testUserSubscriptionTransactionAndChatCRUD() {
   try {
@@ -38,14 +38,48 @@ async function testUserSubscriptionTransactionAndChatCRUD() {
     });
     console.log('Создан новый чат:', newChat.toJSON());
 
-    // 5. Чтение данных пользователя с подпиской, транзакцией и чатом
+    // 5. Создание баланса амокоинов для пользователя
+    const newAmocoinBalance = await AmocoinBalance.create({
+      userId: newUser.id,
+      balance: 0, // начальный баланс
+    });
+    console.log('Создан начальный баланс амокоинов для пользователя:', newAmocoinBalance.toJSON());
+
+    // 6. Создание транзакции амокоинов для пользователя
+    const newAmocoinTransaction = await AmocoinTransaction.create({
+      userId: newUser.id,
+      amount: 20,
+      type: 'activity',
+      source: 'daily_login',
+    });
+    console.log('Создана новая транзакция амокоинов:', newAmocoinTransaction.toJSON());
+
+    // 7. Создание прогресса для TapGame для пользователя
+    const newTapGameProgress = await TapGameProgress.create({
+      userId: newUser.id,
+      tapCount: 0,
+      lastTapTime: new Date(),
+      cooldownEnd: new Date(Date.now() + 1000 * 60 * 10), // пример, через 10 минут
+      totalTapsPlayed: 0,
+    });
+    console.log('Создан прогресс игры TapGame для пользователя:', newTapGameProgress.toJSON());
+
+    // 8. Создание прогресса для FortuneWheel для пользователя
+    const newFortuneWheelProgress = await FortuneWheelProgress.create({
+      userId: newUser.id,
+      lastSpinTime: new Date(),
+      totalSpins: 0,
+    });
+    console.log('Создан прогресс игры FortuneWheel для пользователя:', newFortuneWheelProgress.toJSON());
+
+    // 9. Чтение данных пользователя с подпиской, транзакцией, чатом, балансом, транзакцией амокоинов, прогрессом TapGame и FortuneWheel
     const foundUser = await User.findOne({
       where: { telegramId: 123456789 },
-      include: [Subscription, Transaction, Chat], // Включаем связанные подписки, транзакции и чаты
+      include: [Subscription, Transaction, Chat, AmocoinTransaction, AmocoinBalance, TapGameProgress, FortuneWheelProgress],
     });
-    console.log('Найден пользователь с подпиской, транзакцией и чатом:', foundUser ? foundUser.toJSON() : 'Пользователь не найден');
+    console.log('Найден пользователь с полной информацией:', foundUser ? foundUser.toJSON() : 'Пользователь не найден');
 
-    // 6. Обновление баланса пользователя, статуса подписки, статуса транзакции и сообщения в чате
+    // 10. Обновление данных пользователя и связанных записей
     if (foundUser) {
       foundUser.balance += 50;
       await foundUser.save();
@@ -74,12 +108,44 @@ async function testUserSubscriptionTransactionAndChatCRUD() {
         await chat.save();
         console.log('Обновленный чат:', chat.toJSON());
       }
+
+      // Обновляем баланс амокоинов
+      if (foundUser.AmocoinBalance) {
+        foundUser.AmocoinBalance.balance += 30;
+        await foundUser.AmocoinBalance.save();
+        console.log('Обновленный баланс амокоинов:', foundUser.AmocoinBalance.toJSON());
+      }
+
+      // Обновляем транзакцию амокоинов
+      if (foundUser.AmocoinTransactions && foundUser.AmocoinTransactions.length > 0) {
+        const amocoinTransaction = foundUser.AmocoinTransactions[0];
+        amocoinTransaction.amount += 10;
+        await amocoinTransaction.save();
+        console.log('Обновленная транзакция амокоинов:', amocoinTransaction.toJSON());
+      }
+
+      // Обновляем прогресс TapGame
+      if (foundUser.TapGameProgress) {
+        foundUser.TapGameProgress.tapCount += 5;
+        foundUser.TapGameProgress.totalTapsPlayed += 5;
+        foundUser.TapGameProgress.lastTapTime = new Date();
+        await foundUser.TapGameProgress.save();
+        console.log('Обновленный прогресс TapGame:', foundUser.TapGameProgress.toJSON());
+      }
+
+      // Обновляем прогресс FortuneWheel
+      if (foundUser.FortuneWheelProgress) {
+        foundUser.FortuneWheelProgress.totalSpins += 1;
+        foundUser.FortuneWheelProgress.lastSpinTime = new Date();
+        await foundUser.FortuneWheelProgress.save();
+        console.log('Обновленный прогресс FortuneWheel:', foundUser.FortuneWheelProgress.toJSON());
+      }
     }
 
-    // 7. Удаление пользователя (вместе с подпиской, транзакцией и чатом, если настроено каскадное удаление)
+    // 11. Удаление пользователя и всех связанных записей
     if (foundUser) {
       await foundUser.destroy();
-      console.log('Пользователь и связанные подписки, транзакции и чаты удалены.');
+      console.log('Пользователь и все связанные записи удалены.');
     }
 
   } catch (error) {

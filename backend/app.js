@@ -1,39 +1,67 @@
+// app.js
 require('dotenv').config();
-
 const express = require('express');
+const jwt = require('jsonwebtoken');
+const { sequelize, User, Subscription, Transaction, Chat, Message, TapGameProgress, FortuneWheelProgress, AmocoinBalance, AmocoinTransaction } = require('./models/index');
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Middleware для обработки JSON
+app.use(express.json());
+
+// Импортируем маршруты
+const userRoutes = require('./routes/userRoutes');
+const subscriptionRoutes = require('./routes/subscriptionRoutes');
+const transactionRoutes = require('./routes/transactionRoutes');
+const chatRoutes = require('./routes/chatRoutes');
+const messageRoutes = require('./routes/messageRoutes');
+const tapGameProgressRoutes = require('./routes/tapGameRoutes');
+const fortuneWheelRoutes = require('./routes/fortuneWheelRoutes');
+const amocoinBalanceRoutes = require('./routes/amocoinBalanceRoutes');
+const amocoinTransactionRoutes = require('./routes/amocoinTransactionRoutes'); // Импортируем маршруты для AmocoinTransaction
+
+// Подключаем маршруты
+app.use('/api', userRoutes);
+app.use('/api', subscriptionRoutes);
+app.use('/api/transactions', transactionRoutes);
+app.use('/api/chats', chatRoutes);
+app.use('/api/messages', messageRoutes);
+app.use('/api/tapgame', tapGameProgressRoutes);
+app.use('/api/fortune-wheel', fortuneWheelRoutes);
+app.use('/api/amocoin-balance', amocoinBalanceRoutes);
+app.use('/api', amocoinTransactionRoutes); // Обновленный путь для AmocoinTransaction
+
+// Маршрут приветствия
 app.get('/', (req, res) => {
   res.send('Добро пожаловать в Amoria API!');
 });
 
-app.listen(PORT, () => {
-  console.log(`Сервер запущен на порту ${PORT}`);
-});
-
-const jwt = require('jsonwebtoken');
-
 // Маршрут для тестовой генерации токена
 app.get('/token', (req, res) => {
-    const payload = { userId: 1 }; // простой пример полезной нагрузки
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.json({ token });
-  });
+  const payload = { userId: 1 };
+  const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' });
+  res.json({ token });
+});
 
-  const sequelize = require('./models/index');
-const User = require('./models/User');
-
+// Функция для синхронизации базы данных
 async function syncDatabase() {
   try {
     await sequelize.authenticate();
     console.log('Соединение с базой данных установлено успешно.');
-
-    await sequelize.sync();
-    console.log('Синхронизация модели User завершена.');
+    await sequelize.sync({ alter: true });
+    console.log('Синхронизация всех моделей завершена.');
   } catch (error) {
     console.error('Ошибка при синхронизации базы данных:', error);
   }
 }
 
+// Запускаем синхронизацию базы данных
 syncDatabase();
+
+// Запуск сервера
+app.listen(PORT, () => {
+  console.log(`Сервер запущен на порту ${PORT}`);
+});
+
+module.exports = app;
