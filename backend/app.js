@@ -20,6 +20,8 @@ const tapGameProgressRoutes = require('./routes/tapGameRoutes');
 const fortuneWheelRoutes = require('./routes/fortuneWheelRoutes');
 const amocoinBalanceRoutes = require('./routes/amocoinBalanceRoutes');
 const amocoinTransactionRoutes = require('./routes/amocoinTransactionRoutes'); // Импортируем маршруты для AmocoinTransaction
+const botTestRoutes = require('./routes/botTest'); // Новый маршрут для проверки подписки
+const telegramWebhookRoutes = require('./routes/telegramWebhook'); // Маршрут для webhook Telegram
 
 // Подключаем маршруты
 app.use('/api', userRoutes);
@@ -31,6 +33,8 @@ app.use('/api/tapgame', tapGameProgressRoutes);
 app.use('/api/fortune-wheel', fortuneWheelRoutes);
 app.use('/api/amocoin-balance', amocoinBalanceRoutes);
 app.use('/api', amocoinTransactionRoutes); // Обновленный путь для AmocoinTransaction
+app.use('/api', botTestRoutes); // Подключаем маршрут botTest для проверки подписки
+app.use('/api', telegramWebhookRoutes); // Подключаем маршрут для обработки webhook Telegram
 
 // Маршрут приветствия
 app.get('/', (req, res) => {
