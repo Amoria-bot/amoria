@@ -1,7 +1,7 @@
 // routes/transactionRoutes.js
 const express = require('express');
 const router = express.Router();
-const { Transaction } = require('../models'); // Импортируем модель Transaction
+const { Transaction, User } = require('../models'); // Импортируем обе модели
 
 /**
  * @swagger
@@ -30,6 +30,8 @@ const { Transaction } = require('../models'); // Импортируем моде
  *                 type: number
  *               type:
  *                 type: string
+ *                 enum: [PURCHASE_AMOCOIN, SPEND_AMOCOIN, EARN_AMOCOIN, REFERRAL_BONUS, DAILY_REWARD]
+ *                 description: Тип транзакции
  *     responses:
  *       201:
  *         description: Транзакция успешно создана
@@ -38,7 +40,28 @@ const { Transaction } = require('../models'); // Импортируем моде
  */
 router.post('/', async (req, res) => {
   try {
-    const newTransaction = await Transaction.create(req.body);
+    const { userId, amount, type } = req.body;
+
+    // Создаем транзакцию
+    const newTransaction = await Transaction.create({ userId, amount, type });
+
+    // Находим пользователя
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'Пользователь не найден' });
+    }
+
+    // Обновляем баланс пользователя в зависимости от типа транзакции
+    if (type === 'SPEND_AMOCOIN') {
+      user.balance -= amount; // Списание
+    } else {
+      user.balance += amount; // Пополнение
+    }
+
+    // Сохраняем обновление баланса
+    await user.save();
+
     res.status(201).json(newTransaction);
   } catch (error) {
     console.error('Ошибка при создании транзакции:', error);
@@ -107,6 +130,8 @@ router.get('/:id', async (req, res) => {
  *                 type: number
  *               type:
  *                 type: string
+ *                 enum: [PURCHASE_AMOCOIN, SPEND_AMOCOIN, EARN_AMOCOIN, REFERRAL_BONUS, DAILY_REWARD]
+ *                 description: Тип транзакции
  *     responses:
  *       200:
  *         description: Данные транзакции успешно обновлены

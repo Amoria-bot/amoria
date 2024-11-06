@@ -74,7 +74,7 @@ async function syncDatabase() {
   try {
     await sequelize.authenticate();
     console.log('Соединение с базой данных установлено успешно.');
-    await sequelize.sync({ alter: true });
+    await sequelize.sync({ force: false });
     console.log('Синхронизация всех моделей завершена.');
   } catch (error) {
     console.error('Ошибка при синхронизации базы данных:', error);

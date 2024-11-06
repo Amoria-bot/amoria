@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { User } = require('../models'); // Импортируем модель User
+const { User } = require('../models');
 
 /**
  * @swagger
@@ -21,6 +21,25 @@ const { User } = require('../models'); // Импортируем модель Us
  *     responses:
  *       200:
  *         description: Успешный ответ с массивом пользователей
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                   telegramId:
+ *                     type: integer
+ *                   balance:
+ *                     type: integer
+ *                   createdAt:
+ *                     type: string
+ *                     format: date-time
+ *                   updatedAt:
+ *                     type: string
+ *                     format: date-time
  *       500:
  *         description: Ошибка сервера
  */
@@ -51,6 +70,23 @@ router.get('/users', async (req, res) => {
  *     responses:
  *       200:
  *         description: Успешный ответ с данными пользователя
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 telegramId:
+ *                   type: integer
+ *                 balance:
+ *                   type: integer
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
  *       404:
  *         description: Пользователь не найден
  *       500:
@@ -83,13 +119,32 @@ router.get('/users/:id', async (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
+ *               telegramId:
+ *                 type: integer
+ *                 description: Уникальный Telegram ID пользователя
+ *               balance:
+ *                 type: integer
+ *                 description: Начальный баланс пользователя
  *     responses:
  *       201:
  *         description: Пользователь успешно создан
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 telegramId:
+ *                   type: integer
+ *                 balance:
+ *                   type: integer
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
  *       400:
  *         description: Ошибка при создании пользователя
  */
@@ -123,13 +178,29 @@ router.post('/users', async (req, res) => {
  *           schema:
  *             type: object
  *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
+ *               balance:
+ *                 type: integer
+ *                 description: Новый баланс пользователя
  *     responses:
  *       200:
  *         description: Данные пользователя успешно обновлены
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 telegramId:
+ *                   type: integer
+ *                 balance:
+ *                   type: integer
+ *                 createdAt:
+ *                   type: string
+ *                   format: date-time
+ *                 updatedAt:
+ *                   type: string
+ *                   format: date-time
  *       404:
  *         description: Пользователь не найден
  *       500:

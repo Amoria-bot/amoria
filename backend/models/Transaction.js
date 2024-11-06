@@ -1,5 +1,4 @@
 // models/Transaction.js
-
 const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
@@ -26,8 +25,9 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       type: {
-        type: DataTypes.STRING,
+        type: DataTypes.ENUM('PURCHASE_AMOCOIN', 'SPEND_AMOCOIN', 'EARN_AMOCOIN', 'REFERRAL_BONUS', 'DAILY_REWARD'),
         allowNull: false,
+        comment: 'Типы транзакций: PURCHASE_AMOCOIN, SPEND_AMOCOIN, EARN_AMOCOIN, REFERRAL_BONUS, DAILY_REWARD',
       },
       createdAt: {
         type: DataTypes.DATE,
