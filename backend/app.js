@@ -2,13 +2,32 @@
 require('dotenv').config();
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const { sequelize, User, Subscription, Transaction, Chat, Message, TapGameProgress, FortuneWheelProgress, AmocoinBalance, AmocoinTransaction } = require('./models/index');
+const { sequelize, User, Subscription, Transaction, Chat, Message, TapGameProgress, FortuneWheelProgress, AmocoinBalance, AmocoinTransaction, Character } = require('./models/index');
+const swaggerJsDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware для обработки JSON
 app.use(express.json());
+
+// Настройки Swagger
+const swaggerOptions = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Amoria API',
+      version: '1.0.0',
+      description: 'API для приложения Amoria',
+    },
+    servers: [{ url: `http://localhost:${PORT}` }],
+  },
+  apis: ['./routes/*.js'], // Путь к файлам маршрутов
+};
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Импортируем маршруты
 const userRoutes = require('./routes/userRoutes');
@@ -19,9 +38,10 @@ const messageRoutes = require('./routes/messageRoutes');
 const tapGameProgressRoutes = require('./routes/tapGameRoutes');
 const fortuneWheelRoutes = require('./routes/fortuneWheelRoutes');
 const amocoinBalanceRoutes = require('./routes/amocoinBalanceRoutes');
-const amocoinTransactionRoutes = require('./routes/amocoinTransactionRoutes'); // Импортируем маршруты для AmocoinTransaction
-const botTestRoutes = require('./routes/botTest'); // Новый маршрут для проверки подписки
-const telegramWebhookRoutes = require('./routes/telegramWebhook'); // Маршрут для webhook Telegram
+const amocoinTransactionRoutes = require('./routes/amocoinTransactionRoutes');
+const botTestRoutes = require('./routes/botTest');
+const telegramWebhookRoutes = require('./routes/telegramWebhook');
+const characterRoutes = require('./routes/characterRoutes'); // Маршрут для Character
 
 // Подключаем маршруты
 app.use('/api', userRoutes);
@@ -32,9 +52,10 @@ app.use('/api/messages', messageRoutes);
 app.use('/api/tapgame', tapGameProgressRoutes);
 app.use('/api/fortune-wheel', fortuneWheelRoutes);
 app.use('/api/amocoin-balance', amocoinBalanceRoutes);
-app.use('/api', amocoinTransactionRoutes); // Обновленный путь для AmocoinTransaction
-app.use('/api', botTestRoutes); // Подключаем маршрут botTest для проверки подписки
-app.use('/api', telegramWebhookRoutes); // Подключаем маршрут для обработки webhook Telegram
+app.use('/api', amocoinTransactionRoutes);
+app.use('/api', botTestRoutes);
+app.use('/api', telegramWebhookRoutes);
+app.use('/api/characters', characterRoutes); // Подключаем маршрут для Character
 
 // Маршрут приветствия
 app.get('/', (req, res) => {

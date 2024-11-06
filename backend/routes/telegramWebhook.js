@@ -1,8 +1,42 @@
+// routes/telegramWebhook.js
 const express = require('express');
 const axios = require('axios');
 const router = express.Router();
 
-// Основной маршрут для обработки webhook
+/**
+ * @swagger
+ * tags:
+ *   name: TelegramWebhook
+ *   description: Операции с webhook Telegram
+ */
+/**
+ * @swagger
+ * /api/telegram-webhook:
+ *   post:
+ *     summary: Основной маршрут для обработки Telegram Webhook
+ *     description: Обрабатывает обновления, полученные от Telegram Webhook, и отправляет ответное сообщение в зависимости от содержимого сообщения.
+ *     tags: [TelegramWebhook]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               message:
+ *                 type: object
+ *                 properties:
+ *                   chat:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                   text:
+ *                     type: string
+ *     responses:
+ *       200:
+ *         description: Запрос успешно обработан
+ */
 router.post('/telegram-webhook', async (req, res) => {
   console.log('Received update:', req.body); // Логируем все полученные обновления
 

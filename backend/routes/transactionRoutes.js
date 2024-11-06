@@ -3,7 +3,39 @@ const express = require('express');
 const router = express.Router();
 const { Transaction } = require('../models'); // Импортируем модель Transaction
 
-// Создание новой транзакции
+/**
+ * @swagger
+ * tags:
+ *   name: Transactions
+ *   description: Операции с транзакциями
+ */
+
+/**
+ * @swagger
+ * /api/transactions:
+ *   post:
+ *     summary: Создание новой транзакции
+ *     description: Создает новую транзакцию на основе переданных данных
+ *     tags: [Transactions]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: integer
+ *               amount:
+ *                 type: number
+ *               type:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Транзакция успешно создана
+ *       400:
+ *         description: Ошибка при создании транзакции
+ */
 router.post('/', async (req, res) => {
   try {
     const newTransaction = await Transaction.create(req.body);
@@ -14,7 +46,28 @@ router.post('/', async (req, res) => {
   }
 });
 
-// Получение транзакции по ID
+/**
+ * @swagger
+ * /api/transactions/{id}:
+ *   get:
+ *     summary: Получение транзакции по ID
+ *     description: Возвращает данные транзакции по указанному ID
+ *     tags: [Transactions]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID транзакции
+ *     responses:
+ *       200:
+ *         description: Успешный ответ с данными транзакции
+ *       404:
+ *         description: Транзакция не найдена
+ *       500:
+ *         description: Ошибка сервера
+ */
 router.get('/:id', async (req, res) => {
   try {
     const transaction = await Transaction.findByPk(req.params.id);
@@ -29,7 +82,39 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Обновление транзакции по ID
+/**
+ * @swagger
+ * /api/transactions/{id}:
+ *   put:
+ *     summary: Обновление транзакции по ID
+ *     description: Обновляет данные транзакции по указанному ID
+ *     tags: [Transactions]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID транзакции
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               amount:
+ *                 type: number
+ *               type:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Данные транзакции успешно обновлены
+ *       404:
+ *         description: Транзакция не найдена
+ *       500:
+ *         description: Ошибка сервера
+ */
 router.put('/:id', async (req, res) => {
   try {
     const transaction = await Transaction.findByPk(req.params.id);
@@ -45,7 +130,28 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// Удаление транзакции по ID
+/**
+ * @swagger
+ * /api/transactions/{id}:
+ *   delete:
+ *     summary: Удаление транзакции по ID
+ *     description: Удаляет транзакцию по указанному ID
+ *     tags: [Transactions]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID транзакции
+ *     responses:
+ *       200:
+ *         description: Транзакция успешно удалена
+ *       404:
+ *         description: Транзакция не найдена
+ *       500:
+ *         description: Ошибка сервера
+ */
 router.delete('/:id', async (req, res) => {
   try {
     const transaction = await Transaction.findByPk(req.params.id);

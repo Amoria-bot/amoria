@@ -3,7 +3,42 @@ const express = require('express');
 const router = express.Router();
 const { AmocoinTransaction } = require('../models');
 
-// Создание транзакции Amocoin
+/**
+ * @swagger
+ * tags:
+ *   name: AmocoinTransactions
+ *   description: Операции с транзакциями Amocoin
+ */
+/**
+ * @swagger
+ * /api/amocoin-transaction:
+ *   post:
+ *     summary: Создание транзакции Amocoin
+ *     description: Создает новую транзакцию Amocoin
+ *     tags: [AmocoinTransactions]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: integer
+ *               amount:
+ *                 type: number
+ *               type:
+ *                 type: string
+ *               source:
+ *                 type: string
+ *               status:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Транзакция Amocoin успешно создана
+ *       500:
+ *         description: Ошибка при создании транзакции Amocoin
+ */
 router.post('/amocoin-transaction', async (req, res) => {
     try {
         const { userId, amount, type, source, status } = req.body;
@@ -14,7 +49,28 @@ router.post('/amocoin-transaction', async (req, res) => {
     }
 });
 
-// Получение транзакции Amocoin по ID
+/**
+ * @swagger
+ * /api/amocoin-transaction/{id}:
+ *   get:
+ *     summary: Получение транзакции Amocoin по ID
+ *     description: Возвращает транзакцию Amocoin по указанному ID
+ *     tags: [AmocoinTransactions]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID транзакции Amocoin
+ *     responses:
+ *       200:
+ *         description: Успешный ответ с данными транзакции Amocoin
+ *       404:
+ *         description: Транзакция Amocoin не найдена
+ *       500:
+ *         description: Ошибка при получении транзакции Amocoin
+ */
 router.get('/amocoin-transaction/:id', async (req, res) => {
     try {
         const amocoinTransaction = await AmocoinTransaction.findByPk(req.params.id);
@@ -27,7 +83,28 @@ router.get('/amocoin-transaction/:id', async (req, res) => {
     }
 });
 
-// Получение всех транзакций Amocoin для конкретного пользователя
+/**
+ * @swagger
+ * /api/amocoin-transaction/user/{userId}:
+ *   get:
+ *     summary: Получение всех транзакций Amocoin для пользователя
+ *     description: Возвращает все транзакции Amocoin для указанного пользователя
+ *     tags: [AmocoinTransactions]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID пользователя
+ *     responses:
+ *       200:
+ *         description: Успешный ответ с данными транзакций Amocoin
+ *       404:
+ *         description: Транзакции Amocoin для пользователя не найдены
+ *       500:
+ *         description: Ошибка при получении транзакций Amocoin для пользователя
+ */
 router.get('/amocoin-transaction/user/:userId', async (req, res) => {
     try {
         const amocoinTransactions = await AmocoinTransaction.findAll({ where: { userId: req.params.userId } });
@@ -40,7 +117,43 @@ router.get('/amocoin-transaction/user/:userId', async (req, res) => {
     }
 });
 
-// Обновление транзакции Amocoin
+/**
+ * @swagger
+ * /api/amocoin-transaction/{id}:
+ *   put:
+ *     summary: Обновление транзакции Amocoin
+ *     description: Обновляет данные транзакции Amocoin по ID
+ *     tags: [AmocoinTransactions]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID транзакции Amocoin
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               amount:
+ *                 type: number
+ *               type:
+ *                 type: string
+ *               source:
+ *                 type: string
+ *               status:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Транзакция Amocoin успешно обновлена
+ *       404:
+ *         description: Транзакция Amocoin не найдена
+ *       500:
+ *         description: Ошибка при обновлении транзакции Amocoin
+ */
 router.put('/amocoin-transaction/:id', async (req, res) => {
     try {
         const amocoinTransaction = await AmocoinTransaction.findByPk(req.params.id);
@@ -59,7 +172,28 @@ router.put('/amocoin-transaction/:id', async (req, res) => {
     }
 });
 
-// Удаление транзакции Amocoin
+/**
+ * @swagger
+ * /api/amocoin-transaction/{id}:
+ *   delete:
+ *     summary: Удаление транзакции Amocoin
+ *     description: Удаляет транзакцию Amocoin по ID
+ *     tags: [AmocoinTransactions]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID транзакции Amocoin
+ *     responses:
+ *       200:
+ *         description: Транзакция Amocoin успешно удалена
+ *       404:
+ *         description: Транзакция Amocoin не найдена
+ *       500:
+ *         description: Ошибка при удалении транзакции Amocoin
+ */
 router.delete('/amocoin-transaction/:id', async (req, res) => {
     try {
         const amocoinTransaction = await AmocoinTransaction.findByPk(req.params.id);

@@ -5,6 +5,44 @@ const router = express.Router();
 const CHANNEL_ID = '@amoria_community'; // Укажите ID вашего канала
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 
+/**
+ * @swagger
+ * tags:
+ *   name: BotTests
+ *   description: Тестовые операции с ботом
+ */
+/**
+ * @swagger
+ * /api/check-subscription:
+ *   post:
+ *     summary: Проверка подписки пользователя на канал Telegram
+ *     description: Проверяет, подписан ли указанный пользователь на канал Telegram.
+ *     tags: [BotTests]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               telegramUserId:
+ *                 type: integer
+ *                 description: ID пользователя в Telegram
+ *     responses:
+ *       200:
+ *         description: Статус подписки пользователя
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 success:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *       500:
+ *         description: Ошибка при проверке подписки
+ */
 router.post('/check-subscription', async (req, res) => {
   const { telegramUserId } = req.body;
 

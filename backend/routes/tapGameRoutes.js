@@ -3,7 +3,44 @@ const express = require('express');
 const router = express.Router();
 const { TapGameProgress } = require('../models');
 
-// Создание записи TapGameProgress
+/**
+ * @swagger
+ * tags:
+ *   name: TapGame
+ *   description: Операции с игрой Tap
+ */
+/**
+ * @swagger
+ * /api/tapgame:
+ *   post:
+ *     summary: Создание записи TapGameProgress
+ *     description: Создает новую запись TapGameProgress для отслеживания прогресса пользователя в Tap Game
+ *     tags: [TapGame]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userId:
+ *                 type: integer
+ *               tapCount:
+ *                 type: integer
+ *               lastTapTime:
+ *                 type: string
+ *                 format: date-time
+ *               cooldownEnd:
+ *                 type: string
+ *                 format: date-time
+ *               totalTapsPlayed:
+ *                 type: integer
+ *     responses:
+ *       201:
+ *         description: Запись TapGameProgress успешно создана
+ *       500:
+ *         description: Ошибка при создании записи TapGameProgress
+ */
 router.post('/', async (req, res) => {
     try {
         const { userId, tapCount, lastTapTime, cooldownEnd, totalTapsPlayed } = req.body;
@@ -14,7 +51,28 @@ router.post('/', async (req, res) => {
     }
 });
 
-// Получение записи TapGameProgress по userId
+/**
+ * @swagger
+ * /api/tapgame/{userId}:
+ *   get:
+ *     summary: Получение записи TapGameProgress по userId
+ *     description: Возвращает запись TapGameProgress для указанного пользователя
+ *     tags: [TapGame]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID пользователя
+ *     responses:
+ *       200:
+ *         description: Успешный ответ с записью TapGameProgress
+ *       404:
+ *         description: Запись TapGameProgress не найдена
+ *       500:
+ *         description: Ошибка при получении записи TapGameProgress
+ */
 router.get('/:userId', async (req, res) => {
     try {
         const tapGameProgress = await TapGameProgress.findOne({ where: { userId: req.params.userId } });
@@ -27,7 +85,45 @@ router.get('/:userId', async (req, res) => {
     }
 });
 
-// Обновление записи TapGameProgress
+/**
+ * @swagger
+ * /api/tapgame/{userId}:
+ *   put:
+ *     summary: Обновление записи TapGameProgress
+ *     description: Обновляет запись TapGameProgress для указанного пользователя
+ *     tags: [TapGame]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID пользователя
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               tapCount:
+ *                 type: integer
+ *               lastTapTime:
+ *                 type: string
+ *                 format: date-time
+ *               cooldownEnd:
+ *                 type: string
+ *                 format: date-time
+ *               totalTapsPlayed:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Запись TapGameProgress успешно обновлена
+ *       404:
+ *         description: Запись TapGameProgress не найдена
+ *       500:
+ *         description: Ошибка при обновлении записи TapGameProgress
+ */
 router.put('/:userId', async (req, res) => {
     try {
         const tapGameProgress = await TapGameProgress.findOne({ where: { userId: req.params.userId } });
@@ -46,7 +142,28 @@ router.put('/:userId', async (req, res) => {
     }
 });
 
-// Удаление записи TapGameProgress
+/**
+ * @swagger
+ * /api/tapgame/{userId}:
+ *   delete:
+ *     summary: Удаление записи TapGameProgress
+ *     description: Удаляет запись TapGameProgress для указанного пользователя
+ *     tags: [TapGame]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID пользователя
+ *     responses:
+ *       200:
+ *         description: Запись TapGameProgress успешно удалена
+ *       404:
+ *         description: Запись TapGameProgress не найдена
+ *       500:
+ *         description: Ошибка при удалении записи TapGameProgress
+ */
 router.delete('/:userId', async (req, res) => {
     try {
         const tapGameProgress = await TapGameProgress.findOne({ where: { userId: req.params.userId } });

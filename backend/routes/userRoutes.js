@@ -4,7 +4,26 @@ const express = require('express');
 const router = express.Router();
 const { User } = require('../models'); // Импортируем модель User
 
-// Получение всех пользователей
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: Операции с пользователями
+ */
+
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: Получение всех пользователей
+ *     description: Возвращает список всех пользователей
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: Успешный ответ с массивом пользователей
+ *       500:
+ *         description: Ошибка сервера
+ */
 router.get('/users', async (req, res) => {
   try {
     const users = await User.findAll();
@@ -15,7 +34,28 @@ router.get('/users', async (req, res) => {
   }
 });
 
-// Получение пользователя по ID
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   get:
+ *     summary: Получение пользователя по ID
+ *     description: Возвращает данные пользователя по указанному ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID пользователя
+ *     responses:
+ *       200:
+ *         description: Успешный ответ с данными пользователя
+ *       404:
+ *         description: Пользователь не найден
+ *       500:
+ *         description: Ошибка сервера
+ */
 router.get('/users/:id', async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
@@ -29,7 +69,30 @@ router.get('/users/:id', async (req, res) => {
   }
 });
 
-// Создание нового пользователя
+/**
+ * @swagger
+ * /api/users:
+ *   post:
+ *     summary: Создание нового пользователя
+ *     description: Создает нового пользователя на основе переданных данных
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *     responses:
+ *       201:
+ *         description: Пользователь успешно создан
+ *       400:
+ *         description: Ошибка при создании пользователя
+ */
 router.post('/users', async (req, res) => {
   try {
     const newUser = await User.create(req.body);
@@ -39,7 +102,39 @@ router.post('/users', async (req, res) => {
   }
 });
 
-// Обновление пользователя по ID
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   put:
+ *     summary: Обновление пользователя по ID
+ *     description: Обновляет данные пользователя по указанному ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID пользователя
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Данные пользователя успешно обновлены
+ *       404:
+ *         description: Пользователь не найден
+ *       500:
+ *         description: Ошибка сервера
+ */
 router.put('/users/:id', async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);
@@ -54,7 +149,28 @@ router.put('/users/:id', async (req, res) => {
   }
 });
 
-// Удаление пользователя по ID
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   delete:
+ *     summary: Удаление пользователя по ID
+ *     description: Удаляет пользователя по указанному ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID пользователя
+ *     responses:
+ *       200:
+ *         description: Пользователь успешно удален
+ *       404:
+ *         description: Пользователь не найден
+ *       500:
+ *         description: Ошибка сервера
+ */
 router.delete('/users/:id', async (req, res) => {
   try {
     const user = await User.findByPk(req.params.id);

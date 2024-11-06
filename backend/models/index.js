@@ -18,6 +18,7 @@ const AmocoinTransaction = require('./AmocoinTransaction')(sequelize); // Под
 const AmocoinBalance = require('./AmocoinBalance')(sequelize); // Подключаем модель AmocoinBalance
 const TapGameProgress = require('./TapGameProgress')(sequelize); // Подключаем модель TapGameProgress
 const FortuneWheelProgress = require('./FortuneWheelProgress')(sequelize); // Подключаем модель FortuneWheelProgress
+const Character = require('./Character')(sequelize); // Подключаем модель Character
 
 // Установка связей между моделями
 User.hasMany(Subscription, { foreignKey: 'userId' });
@@ -56,4 +57,5 @@ module.exports = {
   AmocoinBalance,
   TapGameProgress,
   FortuneWheelProgress,
+  Character, // Экспортируем модель Character
 };
