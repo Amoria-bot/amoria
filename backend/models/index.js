@@ -12,13 +12,14 @@ const sequelize = new Sequelize(process.env.DATABASE_URL, {
 const User = require('./User')(sequelize);
 const Subscription = require('./Subscription')(sequelize);
 const Transaction = require('./Transaction')(sequelize);
-const Message = require('./Message')(sequelize); // Подключаем модель Message
-const Chat = require('./Chat')(sequelize); // Подключаем модель Chat
-const AmocoinTransaction = require('./AmocoinTransaction')(sequelize); // Подключаем модель AmocoinTransaction
-const AmocoinBalance = require('./AmocoinBalance')(sequelize); // Подключаем модель AmocoinBalance
-const TapGameProgress = require('./TapGameProgress')(sequelize); // Подключаем модель TapGameProgress
-const FortuneWheelProgress = require('./FortuneWheelProgress')(sequelize); // Подключаем модель FortuneWheelProgress
-const Character = require('./Character')(sequelize); // Подключаем модель Character
+const Message = require('./Message')(sequelize);
+const Chat = require('./Chat')(sequelize);
+const AmocoinTransaction = require('./AmocoinTransaction')(sequelize);
+const AmocoinBalance = require('./AmocoinBalance')(sequelize);
+const TapGameProgress = require('./TapGameProgress')(sequelize);
+const FortuneWheelProgress = require('./FortuneWheelProgress')(sequelize);
+const Character = require('./Character')(sequelize);
+const DailyReward = require('./DailyReward')(sequelize); // Подключаем модель DailyReward
 
 // Установка связей между моделями
 User.hasMany(Subscription, { foreignKey: 'userId' });
@@ -30,20 +31,23 @@ Transaction.belongsTo(User, { foreignKey: 'userId' });
 User.hasMany(Message, { foreignKey: 'userId' });
 Message.belongsTo(User, { foreignKey: 'userId' });
 
-User.hasMany(Chat, { foreignKey: 'userId' }); // Связь между User и Chat
-Chat.belongsTo(User, { foreignKey: 'userId' }); // Связь между Chat и User
+User.hasMany(Chat, { foreignKey: 'userId' });
+Chat.belongsTo(User, { foreignKey: 'userId' });
 
-User.hasMany(AmocoinTransaction, { foreignKey: 'userId' }); // Связь между User и AmocoinTransaction
-AmocoinTransaction.belongsTo(User, { foreignKey: 'userId' }); // Связь между AmocoinTransaction и User
+User.hasMany(AmocoinTransaction, { foreignKey: 'userId' });
+AmocoinTransaction.belongsTo(User, { foreignKey: 'userId' });
 
-User.hasOne(AmocoinBalance, { foreignKey: 'userId' }); // Связь между User и AmocoinBalance
-AmocoinBalance.belongsTo(User, { foreignKey: 'userId' }); // Связь между AmocoinBalance и User
+User.hasOne(AmocoinBalance, { foreignKey: 'userId' });
+AmocoinBalance.belongsTo(User, { foreignKey: 'userId' });
 
-User.hasOne(TapGameProgress, { foreignKey: 'userId' }); // Связь между User и TapGameProgress
-TapGameProgress.belongsTo(User, { foreignKey: 'userId' }); // Связь между TapGameProgress и User
+User.hasOne(TapGameProgress, { foreignKey: 'userId' });
+TapGameProgress.belongsTo(User, { foreignKey: 'userId' });
 
-User.hasOne(FortuneWheelProgress, { foreignKey: 'userId' }); // Связь между User и FortuneWheelProgress
-FortuneWheelProgress.belongsTo(User, { foreignKey: 'userId' }); // Связь между FortuneWheelProgress и User
+User.hasOne(FortuneWheelProgress, { foreignKey: 'userId' });
+FortuneWheelProgress.belongsTo(User, { foreignKey: 'userId' });
+
+User.hasOne(DailyReward, { foreignKey: 'userId' }); // Связь между User и DailyReward
+DailyReward.belongsTo(User, { foreignKey: 'userId' }); // Связь между DailyReward и User
 
 // Экспортируем экземпляр Sequelize и модели
 module.exports = {
@@ -57,5 +61,6 @@ module.exports = {
   AmocoinBalance,
   TapGameProgress,
   FortuneWheelProgress,
-  Character, // Экспортируем модель Character
+  Character,
+  DailyReward, // Экспортируем модель DailyReward
 };

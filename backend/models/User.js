@@ -8,6 +8,10 @@ module.exports = (sequelize) => {
         foreignKey: 'userId',
         as: 'subscription',
       });
+      User.hasOne(models.DailyReward, {
+        foreignKey: 'userId',
+        as: 'dailyReward',
+      });
     }
   }
 

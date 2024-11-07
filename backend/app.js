@@ -42,6 +42,7 @@ const amocoinTransactionRoutes = require('./routes/amocoinTransactionRoutes');
 const botTestRoutes = require('./routes/botTest');
 const telegramWebhookRoutes = require('./routes/telegramWebhook');
 const characterRoutes = require('./routes/characterRoutes'); // Маршрут для Character
+const dailyRewardRoutes = require('./routes/dailyRewardRoutes');
 
 // Подключаем маршруты
 app.use('/api', userRoutes);
@@ -56,6 +57,7 @@ app.use('/api', amocoinTransactionRoutes);
 app.use('/api', botTestRoutes);
 app.use('/api', telegramWebhookRoutes);
 app.use('/api/characters', characterRoutes); // Подключаем маршрут для Character
+app.use('/api/daily-reward', dailyRewardRoutes);
 
 // Маршрут приветствия
 app.get('/', (req, res) => {
