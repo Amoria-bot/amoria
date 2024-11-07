@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const { User } = require('../models');
+const { User, Subscription } = require('../models'); // Импортируем обе модели
 
 /**
  * @swagger
@@ -34,6 +34,13 @@ const { User } = require('../models');
  *                     type: integer
  *                   balance:
  *                     type: integer
+ *                   subscription:
+ *                     type: object
+ *                     properties:
+ *                       status:
+ *                         type: string
+ *                       duration:
+ *                         type: string
  *                   createdAt:
  *                     type: string
  *                     format: date-time
@@ -45,7 +52,13 @@ const { User } = require('../models');
  */
 router.get('/users', async (req, res) => {
   try {
-    const users = await User.findAll();
+    const users = await User.findAll({
+      include: {
+        model: Subscription,
+        as: 'subscription', // Используем alias 'subscription'
+        attributes: ['status', 'duration'],
+      },
+    });
     res.json(users);
   } catch (error) {
     console.error('Ошибка при получении пользователей:', error);
@@ -81,6 +94,13 @@ router.get('/users', async (req, res) => {
  *                   type: integer
  *                 balance:
  *                   type: integer
+ *                 subscription:
+ *                   type: object
+ *                   properties:
+ *                     status:
+ *                       type: string
+ *                     duration:
+ *                       type: string
  *                 createdAt:
  *                   type: string
  *                   format: date-time
@@ -94,7 +114,13 @@ router.get('/users', async (req, res) => {
  */
 router.get('/users/:id', async (req, res) => {
   try {
-    const user = await User.findByPk(req.params.id);
+    const user = await User.findByPk(req.params.id, {
+      include: {
+        model: Subscription,
+        as: 'subscription', // Используем alias 'subscription'
+        attributes: ['status', 'duration'],
+      },
+    });
     if (user) {
       res.json(user);
     } else {

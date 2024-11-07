@@ -36,11 +36,12 @@ router.get('/subscriptions/:userId', async (req, res) => {
   try {
     const subscription = await Subscription.findOne({
       where: { userId: req.params.userId },
+      include: [{ model: User, as: 'user', attributes: ['telegramId'] }],
     });
     if (subscription) {
       res.json(subscription);
     } else {
-      res.status(404).json({ message: 'Подписка не найдена' });
+      res.json({ status: 'inactive' }); // Возвращаем статус 'inactive' если подписка не найдена
     }
   } catch (error) {
     console.error('Ошибка при получении подписки:', error);
@@ -66,9 +67,15 @@ router.get('/subscriptions/:userId', async (req, res) => {
  *                 type: integer
  *               status:
  *                 type: string
+ *                 description: Состояние подписки (active или expired)
+ *               duration:
+ *                 type: string
+ *                 enum: [1_month, 1_year]
+ *                 description: Длительность подписки
  *               expiresOn:
  *                 type: string
  *                 format: date-time
+ *                 description: Дата окончания подписки
  *     responses:
  *       201:
  *         description: Подписка успешно создана
@@ -77,10 +84,11 @@ router.get('/subscriptions/:userId', async (req, res) => {
  */
 router.post('/subscriptions', async (req, res) => {
   try {
-    const { userId, status, expiresOn } = req.body;
+    const { userId, status, duration, expiresOn } = req.body;
     const newSubscription = await Subscription.create({
       userId,
       status,
+      duration,
       expiresOn,
     });
     res.status(201).json(newSubscription);
@@ -113,9 +121,15 @@ router.post('/subscriptions', async (req, res) => {
  *             properties:
  *               status:
  *                 type: string
+ *                 description: Состояние подписки (active или expired)
+ *               duration:
+ *                 type: string
+ *                 enum: [1_month, 1_year]
+ *                 description: Длительность подписки
  *               expiresOn:
  *                 type: string
  *                 format: date-time
+ *                 description: Дата окончания подписки
  *     responses:
  *       200:
  *         description: Подписка успешно обновлена
@@ -126,9 +140,10 @@ router.post('/subscriptions', async (req, res) => {
  */
 router.put('/subscriptions/:id', async (req, res) => {
   try {
+    const { status, duration, expiresOn } = req.body;
     const subscription = await Subscription.findByPk(req.params.id);
     if (subscription) {
-      await subscription.update(req.body);
+      await subscription.update({ status, duration, expiresOn });
       res.json(subscription);
     } else {
       res.status(404).json({ message: 'Подписка не найдена' });

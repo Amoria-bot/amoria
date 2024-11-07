@@ -71,6 +71,64 @@ router.post('/', async (req, res) => {
 
 /**
  * @swagger
+ * /api/transactions:
+ *   get:
+ *     summary: Получение всех транзакций
+ *     description: Возвращает список всех транзакций с деталями
+ *     tags: [Transactions]
+ *     responses:
+ *       200:
+ *         description: Успешный ответ с массивом транзакций
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: integer
+ *                     description: ID транзакции
+ *                   userId:
+ *                     type: integer
+ *                   user:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: integer
+ *                       telegramId:
+ *                         type: integer
+ *                   amount:
+ *                     type: number
+ *                   type:
+ *                     type: string
+ *                     description: Тип транзакции
+ *                   createdAt:
+ *                     type: string
+ *                     format: date-time
+ *                   updatedAt:
+ *                     type: string
+ *                     format: date-time
+ */
+router.get('/', async (req, res) => {
+  try {
+    const transactions = await Transaction.findAll({
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'telegramId'], // Получаем только нужные поля
+        },
+      ],
+    });
+    res.json(transactions);
+  } catch (error) {
+    console.error('Ошибка при получении транзакций:', error);
+    res.status(500).json({ message: 'Ошибка сервера' });
+  }
+});
+
+/**
+ * @swagger
  * /api/transactions/{id}:
  *   get:
  *     summary: Получение транзакции по ID

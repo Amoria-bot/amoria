@@ -2,7 +2,14 @@
 const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
-  class Subscription extends Model {}
+  class Subscription extends Model {
+    static associate(models) {
+      Subscription.belongsTo(models.User, {
+        foreignKey: 'userId',
+        as: 'user', // Используем 'user' как алиас, если к Subscription требуется подключать user
+      });
+    }
+  }
 
   Subscription.init(
     {
@@ -23,11 +30,17 @@ module.exports = (sequelize) => {
       status: {
         type: DataTypes.STRING,
         allowNull: false,
-        defaultValue: 'active',
+        defaultValue: 'inactive', // активная или неактивная подписка
+      },
+      duration: {
+        type: DataTypes.ENUM('1_month', '1_year'),
+        allowNull: true,
+        comment: 'Длительность подписки: 1 месяц или 1 год',
       },
       expiresOn: {
         type: DataTypes.DATE,
         allowNull: true,
+        comment: 'Дата истечения подписки',
       },
       createdAt: {
         type: DataTypes.DATE,
